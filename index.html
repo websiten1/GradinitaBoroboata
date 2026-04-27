@@ -6,601 +6,725 @@
 <title>Grădinița Boroboață — Iași</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-/* ── RESET ── */
+/* ─── RESET ─────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Lato',sans-serif;font-size:16px;line-height:1.6;color:#2D3748;background:#fff;overflow-x:hidden}
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:#F8F9FA}
-::-webkit-scrollbar-thumb{background:#1ABC9C;border-radius:3px}
+body{
+  font-family:'Lato',sans-serif;font-size:16px;line-height:1.7;
+  color:#3D3D3D;background:#F5F0E8;overflow-x:hidden;
+}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#EDE7DB}
+::-webkit-scrollbar-thumb{background:#7ECCC4;border-radius:2px}
 
-/* ── TOKENS ── */
+/* ─── TOKENS ─────────────────────────────────────────────── */
 :root{
-  --teal:#1ABC9C;--teal-d:#16A085;--teal-l:#48D1CC;
-  --orange:#FF8C42;--orange-l:#FFB366;
-  --yellow:#FFD93D;--yellow-l:#FFEB99;
-  --purple:#B19CD9;--purple-l:#E6D7F0;
-  --green:#A8E6CF;
-  --dark:#2D3748;--gray:#6C757D;--gray-l:#F8F9FA;--gray-m:#E9ECEF;
-  --r8:8px;--r16:16px;--r24:24px;--r32:32px;
-  --sh1:0 2px 8px rgba(0,0,0,.08);
-  --sh2:0 4px 24px rgba(0,0,0,.12);
-  --sh3:0 8px 48px rgba(0,0,0,.16);
+  --cream:     #F5F0E8;
+  --cream-d:   #EDE7DB;
+  --cream-dd:  #E4DDD3;
+  --white:     #FDFCFA;
+  --teal:      #7ECCC4;
+  --teal-d:    #5BB8AF;
+  --teal-l:    #A8D9D1;
+  --teal-xl:   #C4E8E3;
+  --teal-bg:   #EBF7F5;
+  --orange:    #E8B89F;
+  --orange-l:  #F0D4C3;
+  --orange-bg: #FBF2ED;
+  --yellow:    #F0D97F;
+  --yellow-l:  #F5E8C8;
+  --yellow-bg: #FBF7EC;
+  --green:     #B8D4B8;
+  --green-l:   #D4E8D4;
+  --green-bg:  #F0F6F0;
+  --purple:    #D4B8E8;
+  --purple-l:  #E8D4F5;
+  --purple-bg: #F5F0FB;
+  --dark:      #2C2C2C;
+  --text:      #3D3D3D;
+  --mid:       #7A7A7A;
+  --border:    #E2DAD0;
+  --r8:8px;--r16:16px;--r24:24px;--r32:32px;--r48:48px;
+  --sh1:0 2px 12px rgba(0,0,0,.05);
+  --sh2:0 4px 28px rgba(0,0,0,.08);
+  --sh3:0 8px 56px rgba(0,0,0,.11);
   --tr:all .3s ease;
 }
 
-h1,h2,h3,h4,h5{font-family:'Poppins',sans-serif;font-weight:700;line-height:1.2}
+h1,h2,h3,h4,h5{font-family:'Poppins',sans-serif;font-weight:700;line-height:1.2;color:var(--dark)}
 
-/* ── MODAL ── */
-.modal-overlay{
+/* ─── MODAL ─────────────────────────────────────────────── */
+.overlay{
   position:fixed;inset:0;z-index:1000;
-  background:rgba(22,160,133,.18);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  background:rgba(44,44,44,.28);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   display:flex;align-items:center;justify-content:center;
-  opacity:0;animation:fadeIn .5s ease .2s forwards;
+  opacity:0;animation:fadeIn .5s ease .1s forwards;
 }
-.modal-card{
-  background:#fff;border-radius:var(--r32);
-  box-shadow:var(--sh3);
-  max-width:580px;width:calc(100% - 32px);
-  padding:48px 44px 40px;position:relative;
-  opacity:0;transform:translateY(-24px);
-  animation:slideDown .5s ease .4s forwards;
+.modal{
+  background:var(--cream);border-radius:var(--r32);
+  box-shadow:var(--sh3);border:1px solid var(--border);
+  max-width:560px;width:calc(100% - 32px);
+  padding:56px 48px 48px;position:relative;
+  opacity:0;transform:translateY(-20px);
+  animation:slideDown .5s ease .25s forwards;
 }
-.modal-close{
-  position:absolute;top:16px;right:18px;
-  background:var(--gray-l);border:none;cursor:pointer;
-  width:36px;height:36px;border-radius:50%;
+@media(max-width:540px){.modal{padding:44px 24px 36px}}
+
+.m-close{
+  position:absolute;top:20px;right:22px;
+  background:none;border:1px solid var(--border);cursor:pointer;
+  width:32px;height:32px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-size:16px;color:var(--gray);transition:var(--tr);
+  color:var(--mid);transition:var(--tr);font-size:14px;
+  font-family:'Lato',sans-serif;
 }
-.modal-close:hover{background:var(--gray-m);color:var(--dark)}
+.m-close:hover{border-color:var(--teal-d);color:var(--teal-d)}
 
-/* progress dots */
-.modal-dots{display:flex;gap:8px;justify-content:center;margin-bottom:36px}
-.dot{
-  width:10px;height:10px;border-radius:5px;
-  background:var(--gray-m);transition:var(--tr);
+/* progress */
+.m-dots{display:flex;gap:8px;justify-content:center;margin-bottom:40px}
+.m-dot{
+  width:8px;height:8px;border-radius:4px;
+  background:var(--cream-dd);transition:var(--tr);
 }
-.dot.active{width:28px;background:var(--teal)}
-.dot.done{background:var(--teal-l)}
+.m-dot.active{width:24px;background:var(--teal)}
+.m-dot.done{background:var(--teal-l)}
 
-.modal-slide{display:none;animation:fadeSlide .4s ease}
-.modal-slide.active{display:block}
+.m-slide{display:none;animation:fadeSl .35s ease}
+.m-slide.on{display:block}
 
-.slide-icon{
-  width:72px;height:72px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  margin:0 auto 24px;font-size:32px;
+.m-slide h2{
+  font-size:1.55rem;color:var(--dark);
+  margin-bottom:10px;text-align:center;
+  font-weight:700;letter-spacing:-.3px;
 }
-.modal-slide h2{font-size:1.55rem;text-align:center;color:var(--dark);margin-bottom:10px}
-.slide-sub{font-family:'Poppins',sans-serif;font-weight:500;font-size:.85rem;
-  color:var(--teal-d);text-align:center;letter-spacing:.4px;margin-bottom:14px}
-.modal-slide>p{color:var(--gray);text-align:center;font-size:.95rem;line-height:1.7}
-
-.check-list{
-  list-style:none;display:grid;grid-template-columns:1fr 1fr;
-  gap:10px;margin:20px 0;
+.m-sub{
+  font-family:'Poppins',sans-serif;font-weight:400;font-style:italic;
+  font-size:.85rem;color:var(--mid);text-align:center;
+  margin-bottom:16px;letter-spacing:.2px;
 }
-.check-list li{
-  display:flex;align-items:center;gap:10px;
-  font-size:.88rem;color:var(--dark);
-  background:var(--gray-l);border-radius:var(--r8);
-  padding:10px 14px;transition:var(--tr);
+.m-slide>p{
+  color:var(--mid);text-align:center;
+  font-size:.95rem;line-height:1.75;
 }
-.check-list li:hover{background:rgba(26,188,156,.09)}
-.chk{
-  width:20px;height:20px;border-radius:50%;flex-shrink:0;
-  background:var(--teal);display:flex;align-items:center;
-  justify-content:center;font-size:10px;color:#fff;
+.m-rule{
+  width:40px;height:2px;background:var(--teal);
+  margin:20px auto;border-radius:1px;
 }
 
-.info-box{
-  background:linear-gradient(135deg,rgba(26,188,156,.07),rgba(255,140,66,.07));
-  border:1px solid rgba(26,188,156,.18);border-radius:var(--r16);
-  padding:22px 24px;margin:18px 0;
-}
-.info-box p{font-size:.93rem;line-height:1.75;color:var(--dark);text-align:left}
-
-.modal-btns{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
-.modal-btns.center{justify-content:center}
-
-/* ── BUTTONS ── */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:13px 26px;border-radius:50px;border:none;cursor:pointer;
-  font-family:'Poppins',sans-serif;font-weight:600;font-size:.875rem;
-  text-decoration:none;letter-spacing:.2px;transition:var(--tr);
-}
-.btn-teal{background:linear-gradient(135deg,var(--teal),var(--teal-d));color:#fff;
-  box-shadow:0 4px 16px rgba(26,188,156,.32)}
-.btn-teal:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(26,188,156,.42)}
-.btn-orange{background:linear-gradient(135deg,var(--orange),#E8731A);color:#fff;
-  box-shadow:0 4px 16px rgba(255,140,66,.3)}
-.btn-orange:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(255,140,66,.42)}
-.btn-ghost{background:var(--gray-l);color:var(--dark);border:2px solid var(--gray-m)}
-.btn-ghost:hover{background:var(--gray-m)}
-.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.65)}
-.btn-outline:hover{background:rgba(255,255,255,.14);border-color:#fff}
-.btn-full{width:100%}
-
-/* ── HEADER ── */
-header{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  background:rgba(255,255,255,.96);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  box-shadow:var(--sh1);transition:var(--tr);
-}
-.hdr{
-  max-width:1200px;margin:0 auto;padding:0 24px;
-  height:72px;display:flex;align-items:center;justify-content:space-between;
-}
-.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
-.logo-mark{
-  width:44px;height:44px;background:linear-gradient(135deg,var(--teal),var(--teal-d));
-  border-radius:12px;display:flex;align-items:center;justify-content:center;
-  font-family:'Poppins',sans-serif;font-weight:800;font-size:1.1rem;color:#fff;
-  box-shadow:0 3px 12px rgba(26,188,156,.35);flex-shrink:0;
-}
-.logo-text{display:flex;flex-direction:column}
-.logo-name{font-family:'Poppins',sans-serif;font-weight:700;font-size:.95rem;color:var(--dark);line-height:1.1}
-.logo-sub{font-size:.68rem;color:var(--gray)}
-nav{display:flex;align-items:center;gap:2px}
-nav a{
-  text-decoration:none;color:var(--dark);
-  font-family:'Poppins',sans-serif;font-size:.82rem;font-weight:500;
-  padding:8px 13px;border-radius:8px;transition:var(--tr);
-}
-nav a:hover,nav a.active{color:var(--teal);background:rgba(26,188,156,.09)}
-.ham{
-  display:none;flex-direction:column;gap:5px;
-  cursor:pointer;background:none;border:none;padding:8px;
-}
-.ham span{width:24px;height:2.5px;background:var(--dark);border-radius:2px;transition:var(--tr)}
-.ham.open span:nth-child(1){transform:rotate(45deg) translate(5.5px,5.5px)}
-.ham.open span:nth-child(2){opacity:0}
-.ham.open span:nth-child(3){transform:rotate(-45deg) translate(5.5px,-5.5px)}
-.mob-nav{
-  display:none;position:fixed;top:72px;left:0;right:0;z-index:199;
-  background:#fff;box-shadow:var(--sh2);
-  padding:16px 20px 24px;flex-direction:column;gap:4px;
-}
-.mob-nav.open{display:flex}
-.mob-nav a{
-  text-decoration:none;color:var(--dark);padding:12px 16px;
-  border-radius:10px;font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:500;
+/* checklist */
+.m-list{list-style:none;margin:22px 0;display:flex;flex-direction:column;gap:10px}
+.m-list li{
+  display:flex;align-items:center;gap:14px;
+  font-size:.92rem;color:var(--text);
+  padding:12px 16px;background:var(--white);
+  border-radius:var(--r8);border:1px solid var(--border);
   transition:var(--tr);
 }
-.mob-nav a:hover{background:rgba(26,188,156,.09);color:var(--teal)}
+.m-list li:hover{border-color:var(--teal-l)}
+.m-check{
+  width:18px;height:18px;flex-shrink:0;border-radius:50%;
+  background:var(--teal-bg);border:1.5px solid var(--teal-l);
+  display:flex;align-items:center;justify-content:center;
+}
+.m-check svg{width:9px;height:9px;stroke:var(--teal-d);stroke-width:2.5;fill:none}
 
-/* ── HERO ── */
+.m-info{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r16);padding:24px;margin:20px 0;
+}
+.m-info p{font-size:.92rem;line-height:1.8;color:var(--text)}
+
+.m-btns{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}
+.m-btns.c{justify-content:center}
+
+/* ─── BUTTONS ─────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 28px;border-radius:var(--r32);border:none;cursor:pointer;
+  font-family:'Poppins',sans-serif;font-weight:600;font-size:.85rem;
+  text-decoration:none;letter-spacing:.1px;transition:var(--tr);
+}
+.btn-teal{
+  background:var(--teal);color:var(--dark);
+  box-shadow:0 2px 14px rgba(126,204,196,.35);
+}
+.btn-teal:hover{background:var(--teal-d);color:#fff;transform:translateY(-1px);
+  box-shadow:0 4px 20px rgba(91,184,175,.4)}
+.btn-ghost{
+  background:transparent;color:var(--mid);
+  border:1px solid var(--border);
+}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal-d)}
+.btn-outline-dark{
+  background:transparent;color:var(--dark);
+  border:1.5px solid var(--dark);
+}
+.btn-outline-dark:hover{background:var(--dark);color:var(--cream)}
+.btn-full{width:100%}
+.btn-sm{padding:10px 20px;font-size:.8rem}
+
+/* ─── HEADER ─────────────────────────────────────────────── */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(245,240,232,.97);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);transition:var(--tr);
+}
+.hdr{
+  max-width:1320px;margin:0 auto;padding:0 32px;
+  height:80px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;gap:16px;
+}
+.nav-l{display:flex;align-items:center;gap:2px}
+.nav-r{display:flex;align-items:center;gap:2px;justify-content:flex-end}
+.hdr-brand{text-align:center}
+.hdr-name{
+  display:block;
+  font-family:'Poppins',sans-serif;font-weight:700;
+  font-size:1.05rem;color:var(--dark);
+  letter-spacing:-.2px;white-space:nowrap;
+  text-decoration:none;
+}
+.hdr-name:hover{color:var(--teal-d)}
+
+nav a{
+  text-decoration:none;color:var(--mid);
+  font-family:'Poppins',sans-serif;font-size:.8rem;font-weight:500;
+  padding:7px 12px;border-radius:var(--r8);transition:var(--tr);
+  white-space:nowrap;
+}
+nav a:hover,nav a.on{color:var(--teal-d);background:var(--teal-bg)}
+
+.ham{
+  display:none;flex-direction:column;gap:5px;
+  cursor:pointer;background:none;border:none;padding:6px;
+}
+.ham span{width:22px;height:2px;background:var(--dark);border-radius:1px;transition:var(--tr)}
+.ham.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+.mob{
+  display:none;position:fixed;top:80px;left:0;right:0;z-index:199;
+  background:var(--cream);border-bottom:1px solid var(--border);
+  padding:16px 20px 24px;flex-direction:column;gap:3px;
+}
+.mob.open{display:flex}
+.mob a{
+  text-decoration:none;color:var(--text);padding:11px 16px;
+  border-radius:var(--r8);font-family:'Poppins',sans-serif;
+  font-size:.9rem;font-weight:500;transition:var(--tr);
+}
+.mob a:hover{background:var(--teal-bg);color:var(--teal-d)}
+.mob .btn{margin-top:8px}
+
+/* ─── HERO ─────────────────────────────────────────────── */
 .hero{
-  min-height:100vh;padding-top:72px;
-  background:linear-gradient(135deg,#0A6E58 0%,var(--teal-d) 28%,var(--teal) 58%,#E87030 100%);
-  position:relative;overflow:hidden;display:flex;align-items:center;
+  min-height:100vh;padding-top:80px;
+  background:var(--cream);position:relative;overflow:hidden;
+  display:flex;align-items:center;
 }
-.hero::before{
-  content:'';position:absolute;inset:0;
-  background-image:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);
-  background-size:36px 36px;
-}
-.blob{position:absolute;border-radius:50%;opacity:.13;background:#fff;pointer-events:none}
-.blob1{width:500px;height:500px;top:-160px;right:-160px}
-.blob2{width:300px;height:300px;bottom:40px;left:-100px}
-.blob3{width:140px;height:140px;top:42%;right:14%}
-.hero-wrap{
-  max-width:1200px;margin:0 auto;padding:80px 24px;
-  display:grid;grid-template-columns:1fr 1fr;gap:64px;
-  align-items:center;position:relative;z-index:1;
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);
-  border-radius:50px;padding:6px 16px;
-  font-family:'Poppins',sans-serif;font-size:.78rem;font-weight:500;color:#fff;
-  margin-bottom:22px;backdrop-filter:blur(4px);
-}
-.pulse{
-  width:8px;height:8px;background:var(--yellow);border-radius:50%;
-  animation:pulse 2s infinite;
-}
-.hero h1{font-size:clamp(1.85rem,3.5vw,2.9rem);color:#fff;margin-bottom:18px;line-height:1.15}
-.hero h1 em{color:var(--yellow);font-style:normal}
-.hero-desc{font-size:1.05rem;color:rgba(255,255,255,.85);margin-bottom:34px;line-height:1.75}
-.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px}
-.hero-stats{display:flex;gap:32px}
-.stat-num{font-family:'Poppins',sans-serif;font-weight:800;font-size:1.75rem;color:#fff;line-height:1}
-.stat-lbl{font-size:.75rem;color:rgba(255,255,255,.7);margin-top:4px}
-.hero-img{
-  background:linear-gradient(135deg,rgba(255,140,66,.55),rgba(255,179,102,.38));
-  border:2px solid rgba(255,255,255,.28);border-radius:var(--r32);
-  aspect-ratio:4/3;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  backdrop-filter:blur(4px);box-shadow:var(--sh3);
-}
-.ph-icon-wrap{
-  width:60px;height:60px;background:rgba(255,255,255,.22);
-  border-radius:50%;display:flex;align-items:center;
-  justify-content:center;margin-bottom:14px;
-}
-.ph-txt{font-family:'Poppins',sans-serif;font-weight:500;
-  color:rgba(255,255,255,.88);font-size:.88rem;text-align:center}
 
-/* ── SECTIONS ── */
+/* decorative dots */
+.dots{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.dot-shape{position:absolute;border-radius:50%}
+/* large background blobs */
+.db1{width:320px;height:320px;top:-80px;left:-80px;
+  background:radial-gradient(circle,rgba(126,204,196,.18),transparent 70%)}
+.db2{width:280px;height:280px;top:-60px;right:-60px;
+  background:radial-gradient(circle,rgba(232,184,159,.2),transparent 70%)}
+.db3{width:240px;height:240px;bottom:-40px;left:5%;
+  background:radial-gradient(circle,rgba(212,184,232,.18),transparent 70%)}
+.db4{width:200px;height:200px;bottom:-20px;right:8%;
+  background:radial-gradient(circle,rgba(240,217,127,.2),transparent 70%)}
+/* small solid dots */
+.ds1{width:12px;height:12px;background:var(--teal-l);opacity:.7;top:18%;left:4%}
+.ds2{width:8px;height:8px;background:var(--orange);opacity:.6;top:28%;left:8%}
+.ds3{width:10px;height:10px;background:var(--yellow);opacity:.7;top:14%;right:5%}
+.ds4{width:14px;height:14px;background:var(--purple);opacity:.55;top:32%;right:4%}
+.ds5{width:9px;height:9px;background:var(--teal);opacity:.5;bottom:25%;left:6%}
+.ds6{width:11px;height:11px;background:var(--orange-l);opacity:.65;bottom:20%;right:6%}
+.ds7{width:7px;height:7px;background:var(--green);opacity:.6;top:60%;left:2%}
+.ds8{width:7px;height:7px;background:var(--yellow-l);opacity:.55;top:55%;right:3%}
+/* outline dots */
+.do1{width:28px;height:28px;border:2px solid rgba(126,204,196,.45);top:10%;left:10%}
+.do2{width:20px;height:20px;border:2px solid rgba(232,184,159,.45);top:22%;right:9%}
+.do3{width:24px;height:24px;border:2px solid rgba(212,184,232,.4);bottom:28%;left:12%}
+.do4{width:18px;height:18px;border:2px solid rgba(240,217,127,.45);bottom:22%;right:11%}
+
+.hero-inner{
+  max-width:900px;margin:0 auto;padding:80px 24px;
+  position:relative;z-index:1;text-align:center;
+}
+.hero-eyebrow{
+  display:inline-block;
+  font-family:'Poppins',sans-serif;font-size:.78rem;font-weight:500;
+  color:var(--teal-d);letter-spacing:1.5px;text-transform:uppercase;
+  background:var(--teal-bg);border:1px solid var(--teal-xl);
+  padding:6px 18px;border-radius:var(--r32);margin-bottom:28px;
+}
+.hero-brand{
+  font-family:'Poppins',sans-serif;font-weight:800;
+  font-size:clamp(2.4rem,6vw,4.2rem);color:var(--dark);
+  letter-spacing:-.5px;margin-bottom:18px;line-height:1.08;
+}
+.hero-tagline{
+  font-family:'Poppins',sans-serif;font-weight:300;font-style:italic;
+  font-size:clamp(1rem,2.2vw,1.25rem);color:var(--mid);
+  margin-bottom:40px;line-height:1.6;
+}
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.hero-ph{
+  background:linear-gradient(135deg,var(--teal-l),var(--orange-l));
+  border-radius:var(--r24);max-width:680px;margin:0 auto;
+  aspect-ratio:16/7;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.6);
+  box-shadow:var(--sh2);
+}
+.ph-label{
+  font-family:'Poppins',sans-serif;font-weight:400;font-size:.82rem;
+  color:rgba(44,44,44,.55);letter-spacing:.3px;
+}
+
+/* ─── SECTION COMMON ─────────────────────────────────────── */
 section{padding:100px 24px}
 .wrap{max-width:1200px;margin:0 auto}
-.sec-label{
-  display:inline-flex;align-items:center;gap:7px;
-  background:rgba(26,188,156,.1);color:var(--teal-d);
-  border-radius:50px;padding:5px 15px;
-  font-family:'Poppins',sans-serif;font-weight:600;font-size:.75rem;
-  letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px;
-}
-.sec-label.or{background:rgba(255,140,66,.1);color:#B85E00}
-.sec-label.pu{background:rgba(177,156,217,.15);color:#6B4D9E}
-.sec-label.wh{background:rgba(255,255,255,.18);color:rgba(255,255,255,.9)}
-.sec-h{font-size:clamp(1.55rem,2.8vw,2.15rem);color:var(--dark);margin-bottom:14px}
-.sec-d{color:var(--gray);font-size:.97rem;max-width:600px;line-height:1.75}
-.sec-head{margin-bottom:56px}
-.sec-head.c{text-align:center}.sec-head.c .sec-d{margin:0 auto}
-.sec-h.wh{color:#fff}.sec-d.wh{color:rgba(255,255,255,.78)}
+.wrap-sm{max-width:840px;margin:0 auto}
 
-/* ── DESPRE ── */
-.despre-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.sec-label{
+  display:inline-block;
+  font-family:'Poppins',sans-serif;font-weight:500;font-size:.74rem;
+  color:var(--teal-d);letter-spacing:1.4px;text-transform:uppercase;
+  margin-bottom:14px;
+}
+.sec-label.or{color:#C08060}
+.sec-label.pu{color:#8060A0}
+.sec-rule{width:36px;height:2px;background:var(--teal);border-radius:1px;margin:14px 0 22px}
+.sec-rule.or{background:var(--orange)}
+.sec-rule.c{margin-left:auto;margin-right:auto}
+.sec-h{
+  font-size:clamp(1.5rem,2.8vw,2.1rem);color:var(--dark);
+  margin-bottom:14px;letter-spacing:-.3px;
+}
+.sec-d{color:var(--mid);font-size:.97rem;max-width:560px;line-height:1.8}
+.sec-head{margin-bottom:60px}
+.sec-head.c{text-align:center}.sec-head.c .sec-d,.sec-head.c .sec-rule{margin-left:auto;margin-right:auto}
+
+/* ─── DESPRE NOI ─────────────────────────────────────────── */
+#despre{background:var(--white)}
+.despre-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
 .img-ph{
   border-radius:var(--r32);aspect-ratio:4/3;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:var(--sh1);border:1px solid rgba(255,255,255,.8);
 }
-.img-ph.teal{background:linear-gradient(135deg,var(--teal-d),var(--teal-l))}
-.img-ph.orange{background:linear-gradient(135deg,var(--orange),var(--orange-l))}
-.img-ph.yellow{background:linear-gradient(135deg,var(--yellow),var(--yellow-l))}
-.img-ph.purple{background:linear-gradient(135deg,var(--purple),var(--purple-l))}
-.img-ph .ico{
-  width:52px;height:52px;background:rgba(255,255,255,.22);
-  border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:22px;margin-bottom:12px;
-}
-.img-ph .lbl{font-family:'Poppins',sans-serif;font-weight:500;
-  font-size:.88rem;color:rgba(255,255,255,.88);text-align:center}
-
-.feat-list{list-style:none;display:flex;flex-direction:column;gap:12px;margin:24px 0}
-.feat-list li{display:flex;align-items:flex-start;gap:12px;font-size:.93rem;color:var(--dark)}
-.feat-ico{
-  width:22px;height:22px;background:linear-gradient(135deg,var(--teal),var(--teal-d));
-  border-radius:50%;display:flex;align-items:center;justify-content:center;
-  font-size:10px;color:#fff;flex-shrink:0;margin-top:1px;
-}
-
-/* ── VIZIUNE ── */
-#viziune{background:var(--gray-l)}
-.viz-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.viz-card{padding:40px;border-radius:var(--r32);position:relative;overflow:hidden}
-.viz-card.tc{background:linear-gradient(135deg,#E7F9F5,#C8F0E7);border:1px solid rgba(26,188,156,.2)}
-.viz-card.oc{background:linear-gradient(135deg,#FFF5EE,#FFE4CC);border:1px solid rgba(255,140,66,.2)}
-.viz-ico{
-  width:54px;height:54px;border-radius:14px;
+.img-ph.t{background:linear-gradient(135deg,var(--teal-l),var(--teal-xl))}
+.img-ph.o{background:linear-gradient(135deg,var(--orange),var(--orange-l))}
+.img-ph.y{background:linear-gradient(135deg,var(--yellow),var(--yellow-l))}
+.img-ph.p{background:linear-gradient(135deg,var(--purple),var(--purple-l))}
+.ph-wrap{text-align:center}
+.ph-ico{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.35);
   display:flex;align-items:center;justify-content:center;
-  font-size:22px;margin-bottom:18px;
+  margin:0 auto 10px;
 }
-.viz-card.tc .viz-ico{background:var(--teal);color:#fff}
-.viz-card.oc .viz-ico{background:var(--orange);color:#fff}
-.viz-card h3{font-size:1.2rem;margin-bottom:10px;color:var(--dark)}
-.viz-card p{color:var(--gray);font-size:.93rem;line-height:1.75;margin-bottom:10px}
+.ph-ico svg{stroke:rgba(44,44,44,.45);fill:none;stroke-width:1.5}
+.ph-lbl{font-family:'Poppins',sans-serif;font-size:.8rem;font-weight:400;
+  color:rgba(44,44,44,.5);letter-spacing:.2px}
 
-/* ── SERVICII ── */
-#servicii{background:var(--gray-l)}
-.srv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
-.srv-card{
-  background:#fff;border-radius:var(--r24);padding:32px;
-  box-shadow:var(--sh1);transition:var(--tr);position:relative;overflow:hidden;
+.feat-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin:24px 0}
+.feat-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:.93rem;color:var(--text);line-height:1.6;
 }
-.srv-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;
-  height:4px;border-radius:var(--r24) var(--r24) 0 0;
+.feat-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--teal);flex-shrink:0;margin-top:7px;
 }
-.srv-card:hover{transform:translateY(-6px);box-shadow:var(--sh3)}
-.c1::before{background:var(--teal)}
-.c2::before{background:var(--orange)}
-.c3::before{background:var(--yellow)}
-.c4::before{background:var(--purple)}
-.c5::before{background:var(--green)}
-.c6::before{background:#FF6B9D}
-.srv-ico{
-  width:52px;height:52px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;margin-bottom:18px;
-}
-.c1 .srv-ico{background:rgba(26,188,156,.11);color:var(--teal-d)}
-.c2 .srv-ico{background:rgba(255,140,66,.11);color:#B85E00}
-.c3 .srv-ico{background:rgba(255,217,61,.14);color:#9A7600}
-.c4 .srv-ico{background:rgba(177,156,217,.14);color:#6B4D9E}
-.c5 .srv-ico{background:rgba(168,230,207,.2);color:#276946}
-.c6 .srv-ico{background:rgba(255,107,157,.12);color:#B5004C}
-.srv-card h3{font-size:1rem;margin-bottom:8px;color:var(--dark)}
-.srv-card p{color:var(--gray);font-size:.88rem;line-height:1.65}
 
-/* ── GRUPE ── */
-.grp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
-.grp-card{
-  border-radius:var(--r24);padding:36px 26px;text-align:center;
+/* ─── VIZIUNE & MISIUNE ─────────────────────────────────── */
+#viziune{background:var(--cream)}
+.viz-g{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.viz-card{
+  padding:40px;border-radius:var(--r32);
+  border:1px solid var(--border);background:var(--white);
   transition:var(--tr);
 }
-.grp-card:hover{transform:translateY(-6px);box-shadow:var(--sh3)}
-.grp-card.baby{background:linear-gradient(135deg,#E7F9F5,#B0EBE0);border:2px solid rgba(26,188,156,.28)}
-.grp-card.mica{background:linear-gradient(135deg,#FFF5EE,#FFDCB8);border:2px solid rgba(255,140,66,.28)}
-.grp-card.mij{background:linear-gradient(135deg,#FFFDE7,#FFF8C0);border:2px solid rgba(255,217,61,.38)}
-.grp-card.mare{background:linear-gradient(135deg,#F5F0FF,#E5D7F0);border:2px solid rgba(177,156,217,.38)}
-.age-badge{
-  display:inline-block;padding:5px 14px;border-radius:50px;
-  font-family:'Poppins',sans-serif;font-weight:700;font-size:.78rem;margin-bottom:14px;
+.viz-card:hover{transform:translateY(-3px);box-shadow:var(--sh2)}
+.viz-card h3{font-size:1.15rem;margin-bottom:12px;color:var(--dark)}
+.viz-card p{color:var(--mid);font-size:.93rem;line-height:1.8;margin-bottom:10px}
+.viz-accent{
+  display:inline-block;width:28px;height:3px;
+  border-radius:2px;margin-bottom:18px;
 }
-.baby .age-badge{background:var(--teal);color:#fff}
-.mica .age-badge{background:var(--orange);color:#fff}
-.mij  .age-badge{background:#C8A000;color:#fff}
-.mare .age-badge{background:#6B4D9E;color:#fff}
-.grp-card h3{font-size:1.15rem;margin-bottom:8px;color:var(--dark)}
-.grp-card p{font-size:.84rem;color:var(--gray);line-height:1.6}
+.viz-accent.t{background:var(--teal)}
+.viz-accent.o{background:var(--orange)}
+
+/* ─── SERVICII ─────────────────────────────────────────── */
+#servicii{background:var(--cream-d)}
+.srv-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.srv-card{
+  background:var(--white);border-radius:var(--r24);padding:32px;
+  border:1px solid var(--border);transition:var(--tr);
+}
+.srv-card:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
+.srv-ico-wrap{
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;
+}
+.srv-card h3{font-size:.97rem;margin-bottom:8px;color:var(--dark)}
+.srv-card p{color:var(--mid);font-size:.87rem;line-height:1.7}
+/* card accent colors */
+.sc1 .srv-ico-wrap{background:var(--teal-bg)}.sc1 .srv-ico-wrap svg{stroke:var(--teal-d)}
+.sc2 .srv-ico-wrap{background:var(--orange-bg)}.sc2 .srv-ico-wrap svg{stroke:#C08060}
+.sc3 .srv-ico-wrap{background:var(--yellow-bg)}.sc3 .srv-ico-wrap svg{stroke:#A08020}
+.sc4 .srv-ico-wrap{background:var(--purple-bg)}.sc4 .srv-ico-wrap svg{stroke:#8060A0}
+.sc5 .srv-ico-wrap{background:var(--green-bg)}.sc5 .srv-ico-wrap svg{stroke:#5A8A5A}
+.sc6 .srv-ico-wrap{background:var(--orange-bg)}.sc6 .srv-ico-wrap svg{stroke:#C08060}
+.srv-card .card-line{
+  width:24px;height:2px;border-radius:1px;margin-bottom:16px;
+}
+.sc1 .card-line{background:var(--teal)}
+.sc2 .card-line{background:var(--orange)}
+.sc3 .card-line{background:var(--yellow)}
+.sc4 .card-line{background:var(--purple)}
+.sc5 .card-line{background:var(--green)}
+.sc6 .card-line{background:var(--orange-l)}
+
+/* ─── GRUPELE ─────────────────────────────────────────── */
+#grupe{background:var(--cream)}
+.grp-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.grp-card{
+  border-radius:var(--r24);padding:36px 28px;text-align:center;
+  border:1px solid;transition:var(--tr);
+}
+.grp-card:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
+.grp-card.g1{background:var(--teal-bg);border-color:var(--teal-xl)}
+.grp-card.g2{background:var(--orange-bg);border-color:var(--orange-l)}
+.grp-card.g3{background:var(--yellow-bg);border-color:var(--yellow-l)}
+.grp-card.g4{background:var(--purple-bg);border-color:var(--purple-l)}
+.age-pill{
+  display:inline-block;padding:4px 14px;border-radius:var(--r32);
+  font-family:'Poppins',sans-serif;font-weight:600;font-size:.76rem;
+  margin-bottom:14px;
+}
+.g1 .age-pill{background:var(--teal);color:var(--dark)}
+.g2 .age-pill{background:var(--orange);color:var(--dark)}
+.g3 .age-pill{background:var(--yellow);color:var(--dark)}
+.g4 .age-pill{background:var(--purple);color:var(--dark)}
+.grp-card h3{font-size:1.1rem;margin-bottom:8px;color:var(--dark)}
+.grp-card p{font-size:.85rem;color:var(--mid);line-height:1.65;margin-bottom:14px}
 .grp-status{
   display:inline-flex;align-items:center;gap:6px;
-  margin-top:14px;font-size:.78rem;font-weight:600;font-family:'Poppins',sans-serif;
+  font-size:.75rem;font-weight:600;font-family:'Poppins',sans-serif;color:var(--mid);
 }
-.sdot{width:8px;height:8px;border-radius:50%;animation:pulse 2s infinite}
-.open-status{color:#1A7A3A}.open-status .sdot{background:#2ECC71}
-.lim-status{color:#B85E00}.lim-status .sdot{background:var(--orange)}
+.s-dot{
+  width:7px;height:7px;border-radius:50%;animation:blink 2.5s infinite;
+}
+.s-open .s-dot{background:#6BAA7A}
+.s-open{color:#4A8060}
+.s-lim .s-dot{background:var(--orange)}
+.s-lim{color:#9A6040}
 
-/* ── CABINET ── */
-#cabinet{
-  background:linear-gradient(135deg,#0A6E58 0%,var(--teal-d) 45%,#1255A0 100%);
-}
-.cab-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.cab-feats{display:flex;flex-direction:column;gap:14px;margin-top:22px}
+/* ─── CABINET ─────────────────────────────────────────── */
+#cabinet{background:var(--teal-bg);border-top:1px solid var(--teal-xl);border-bottom:1px solid var(--teal-xl)}
+.cab-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.cab-feats{display:flex;flex-direction:column;gap:14px;margin-top:24px}
 .cab-feat{
   display:flex;align-items:flex-start;gap:16px;
-  padding:18px 20px;
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);
-  border-radius:var(--r16);backdrop-filter:blur(4px);transition:var(--tr);
+  padding:20px;background:rgba(255,255,255,.65);
+  border:1px solid rgba(126,204,196,.25);
+  border-radius:var(--r16);transition:var(--tr);
 }
-.cab-feat:hover{background:rgba(255,255,255,.17)}
+.cab-feat:hover{background:rgba(255,255,255,.9);border-color:var(--teal-l)}
 .cab-feat-ico{
-  width:44px;height:44px;background:rgba(255,255,255,.18);
-  border-radius:12px;display:flex;align-items:center;
-  justify-content:center;font-size:20px;flex-shrink:0;
+  width:40px;height:40px;border-radius:12px;flex-shrink:0;
+  background:rgba(126,204,196,.2);
+  display:flex;align-items:center;justify-content:center;
 }
-.cab-feat h4{font-size:.92rem;color:#fff;margin-bottom:4px}
-.cab-feat p{font-size:.83rem;color:rgba(255,255,255,.68);line-height:1.5}
+.cab-feat-ico svg{stroke:var(--teal-d);fill:none;stroke-width:1.5}
+.cab-feat h4{font-size:.9rem;color:var(--dark);margin-bottom:4px}
+.cab-feat p{font-size:.83rem;color:var(--mid);line-height:1.55}
 
-/* ── CONTACT ── */
-.con-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:64px}
-.con-info{background:var(--gray-l);border-radius:var(--r32);padding:40px}
+/* ─── MAP ─────────────────────────────────────────────── */
+.map-ph{
+  height:360px;
+  background:linear-gradient(135deg,var(--cream-d),var(--teal-xl));
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.map-card{
+  background:var(--white);border-radius:var(--r24);
+  padding:24px 32px;box-shadow:var(--sh2);
+  display:flex;align-items:center;gap:18px;
+  border:1px solid var(--border);max-width:400px;
+}
+.map-ico{
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
+  background:var(--teal-bg);border:1.5px solid var(--teal-l);
+  display:flex;align-items:center;justify-content:center;
+}
+.map-ico svg{stroke:var(--teal-d);fill:none;stroke-width:1.5}
+.map-card h4{font-size:.95rem;color:var(--dark);margin-bottom:4px}
+.map-card p{font-size:.83rem;color:var(--mid);line-height:1.5}
+.map-note{
+  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  font-size:.72rem;color:rgba(44,44,44,.4);
+  background:rgba(255,255,255,.7);padding:5px 14px;
+  border-radius:var(--r32);white-space:nowrap;border:1px solid var(--border);
+}
+
+/* ─── CONTACT ─────────────────────────────────────────── */
+#contact{background:var(--cream)}
+.con-g{display:grid;grid-template-columns:1fr 1.2fr;gap:64px}
+.con-info{background:var(--white);border-radius:var(--r32);
+  padding:40px;border:1px solid var(--border)}
 .con-item{
   display:flex;align-items:flex-start;gap:16px;
-  padding:18px 0;border-bottom:1px solid var(--gray-m);
+  padding:18px 0;border-bottom:1px solid var(--border);
 }
-.con-item:last-of-type{border-bottom:none}
+.con-item:last-of-type{border:none}
 .con-ico{
-  width:46px;height:46px;border-radius:12px;flex-shrink:0;
-  background:linear-gradient(135deg,var(--teal),var(--teal-d));
-  display:flex;align-items:center;justify-content:center;font-size:20px;
+  width:42px;height:42px;border-radius:12px;flex-shrink:0;
+  background:var(--teal-bg);border:1px solid var(--teal-xl);
+  display:flex;align-items:center;justify-content:center;
 }
-.con-item h4{font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;
-  color:var(--gray);font-family:'Poppins',sans-serif;font-weight:600;margin-bottom:4px}
-.con-item p,.con-item a{font-size:.93rem;color:var(--dark);font-weight:500;text-decoration:none}
-.con-item a:hover{color:var(--teal)}
-.open-pill{
-  display:inline-flex;align-items:center;gap:8px;margin-top:22px;
-  background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.28);
-  border-radius:50px;padding:8px 18px;
+.con-ico svg{stroke:var(--teal-d);fill:none;stroke-width:1.5}
+.con-item h4{
+  font-size:.72rem;text-transform:uppercase;letter-spacing:.8px;
+  color:var(--mid);font-family:'Poppins',sans-serif;font-weight:600;margin-bottom:4px;
 }
-.open-pill .sdot{background:#2ECC71;animation:pulse 2s infinite}
-.open-pill span{font-family:'Poppins',sans-serif;font-weight:600;font-size:.82rem;color:#1A7A3A}
+.con-item p,.con-item a{
+  font-size:.92rem;color:var(--text);font-weight:400;text-decoration:none;
+}
+.con-item a:hover{color:var(--teal-d)}
+.open-tag{
+  display:inline-flex;align-items:center;gap:8px;margin-top:20px;
+  background:rgba(107,170,122,.1);border:1px solid rgba(107,170,122,.3);
+  border-radius:var(--r32);padding:7px 16px;
+}
+.open-tag .s-dot{background:#6BAA7A;animation:blink 2.5s infinite}
+.open-tag span{font-family:'Poppins',sans-serif;font-weight:600;font-size:.78rem;color:#3A7050}
 
 /* form */
-.con-form{background:#fff;border-radius:var(--r32);padding:40px;box-shadow:var(--sh2)}
-.con-form h3{font-size:1.25rem;margin-bottom:6px;color:var(--dark)}
-.form-sub{color:var(--gray);font-size:.88rem;margin-bottom:26px}
+.con-form{
+  background:var(--white);border-radius:var(--r32);
+  padding:40px;border:1px solid var(--border);
+}
+.con-form h3{font-size:1.2rem;margin-bottom:6px;color:var(--dark)}
+.f-sub{color:var(--mid);font-size:.87rem;margin-bottom:26px}
 .f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .f-grp{margin-bottom:14px}
 .f-grp label{
   display:block;font-family:'Poppins',sans-serif;font-weight:500;
-  font-size:.82rem;color:var(--dark);margin-bottom:7px;
+  font-size:.8rem;color:var(--dark);margin-bottom:7px;
 }
 .f-grp input,.f-grp select,.f-grp textarea{
-  width:100%;padding:12px 15px;
-  border:2px solid var(--gray-m);border-radius:var(--r8);
-  font-family:'Lato',sans-serif;font-size:.93rem;color:var(--dark);
-  background:var(--gray-l);outline:none;transition:var(--tr);
+  width:100%;padding:12px 14px;
+  border:1.5px solid var(--border);border-radius:var(--r8);
+  font-family:'Lato',sans-serif;font-size:.9rem;color:var(--dark);
+  background:var(--cream);outline:none;transition:var(--tr);
 }
 .f-grp input:focus,.f-grp select:focus,.f-grp textarea:focus{
-  border-color:var(--teal);background:#fff;
-  box-shadow:0 0 0 4px rgba(26,188,156,.1);
+  border-color:var(--teal);background:var(--white);
+  box-shadow:0 0 0 3px rgba(126,204,196,.15);
 }
-.f-grp textarea{resize:vertical;min-height:96px}
-.f-grp input.err,.f-grp textarea.err{border-color:#E74C3C}
-.err-msg{font-size:.78rem;color:#E74C3C;margin-top:4px;display:none}
-.err-msg.show{display:block}
-.form-ok{display:none;text-align:center;padding:20px}
+.f-grp textarea{resize:vertical;min-height:90px}
+.f-grp input.err,.f-grp textarea.err{border-color:#D08080}
+.err-t{font-size:.76rem;color:#C06060;margin-top:4px;display:none}
+.err-t.show{display:block}
+.form-ok{display:none;text-align:center;padding:24px}
 .form-ok.show{display:block;animation:fadeIn .4s ease}
 .ok-ico{
-  width:62px;height:62px;border-radius:50%;margin:0 auto 16px;
-  background:linear-gradient(135deg,var(--teal),var(--teal-d));
-  display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;
-}
-
-/* ── MAP ── */
-.map-wrap{height:380px;background:linear-gradient(135deg,var(--teal-l),var(--teal));
-  position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.map-pin{
-  background:#fff;border-radius:var(--r24);padding:22px 30px;
-  box-shadow:var(--sh3);display:flex;align-items:center;gap:18px;max-width:400px;
-}
-.map-pin-ico{
-  width:50px;height:50px;border-radius:50%;flex-shrink:0;
-  background:linear-gradient(135deg,var(--teal),var(--teal-d));
-  display:flex;align-items:center;justify-content:center;font-size:22px;
-}
-.map-pin h4{font-size:.97rem;color:var(--dark);margin-bottom:4px}
-.map-pin p{font-size:.83rem;color:var(--gray);line-height:1.5}
-.map-note{
-  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
-  background:rgba(0,0,0,.45);color:rgba(255,255,255,.8);
-  font-size:.73rem;padding:5px 14px;border-radius:50px;white-space:nowrap;
-}
-
-/* ── FOOTER ── */
-footer{background:var(--dark);color:#fff;padding:64px 24px 0}
-.ft-wrap{max-width:1200px;margin:0 auto}
-.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;
-  padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.1)}
-.ft-brand p{font-size:.88rem;color:rgba(255,255,255,.55);line-height:1.7;margin:14px 0 22px}
-.socials{display:flex;gap:8px}
-.soc{
-  width:38px;height:38px;background:rgba(255,255,255,.1);border-radius:10px;
+  width:56px;height:56px;border-radius:50%;margin:0 auto 16px;
+  background:var(--teal-bg);border:1.5px solid var(--teal-l);
   display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.65);text-decoration:none;transition:var(--tr);font-size:15px;
 }
-.soc:hover{background:var(--teal);color:#fff}
-.ft-col h4{font-family:'Poppins',sans-serif;font-weight:600;font-size:.82rem;
-  text-transform:uppercase;letter-spacing:.5px;margin-bottom:18px;color:#fff}
-.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
-.ft-col ul li a{color:rgba(255,255,255,.55);text-decoration:none;font-size:.87rem;transition:var(--tr)}
+.ok-ico svg{stroke:var(--teal-d);fill:none;stroke-width:2}
+
+/* ─── FOOTER ─────────────────────────────────────────────── */
+footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
+.ft-wrap{max-width:1200px;margin:0 auto}
+.ft-g{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;
+  padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.08);
+}
+.ft-brand .brand-tag{
+  font-family:'Poppins',sans-serif;font-weight:600;font-size:.95rem;
+  color:#fff;margin-bottom:10px;display:block;
+}
+.ft-brand p{font-size:.86rem;color:rgba(255,255,255,.45);line-height:1.75;margin-bottom:22px}
+.socs{display:flex;gap:8px}
+.soc{
+  width:36px;height:36px;border-radius:10px;
+  background:rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;
+  transition:var(--tr);text-decoration:none;
+}
+.soc:hover{background:var(--teal)}
+.soc svg{stroke:rgba(255,255,255,.6);fill:none;stroke-width:1.5}
+.soc:hover svg{stroke:#fff}
+.ft-col h4{
+  font-family:'Poppins',sans-serif;font-weight:600;font-size:.78rem;
+  text-transform:uppercase;letter-spacing:.8px;
+  margin-bottom:18px;color:rgba(255,255,255,.7);
+}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.ft-col ul li a{
+  color:rgba(255,255,255,.4);text-decoration:none;
+  font-size:.86rem;transition:var(--tr);
+}
 .ft-col ul li a:hover{color:var(--teal-l)}
-.ft-bottom{
+.ft-bot{
   padding:22px 0;display:flex;align-items:center;
   justify-content:space-between;gap:16px;flex-wrap:wrap;
 }
-.ft-bottom p{font-size:.82rem;color:rgba(255,255,255,.35)}
+.ft-bot p{font-size:.8rem;color:rgba(255,255,255,.3)}
 
-/* ── BACK TO TOP ── */
+/* ─── BACK TO TOP ─────────────────────────────────────────── */
 .btt{
   position:fixed;bottom:28px;right:28px;z-index:100;
-  width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;
-  background:linear-gradient(135deg,var(--teal),var(--teal-d));
-  color:#fff;display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border);
+  cursor:pointer;background:var(--white);color:var(--dark);
+  display:flex;align-items:center;justify-content:center;
   box-shadow:var(--sh2);transition:var(--tr);
   opacity:0;pointer-events:none;
 }
 .btt.show{opacity:1;pointer-events:auto}
-.btt:hover{transform:translateY(-3px);box-shadow:var(--sh3)}
+.btt:hover{background:var(--teal);border-color:var(--teal);color:#fff;transform:translateY(-2px)}
+.btt svg{stroke:currentColor;fill:none;stroke-width:2}
 
-/* ── SCROLL REVEAL ── */
-.rev{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+/* ─── SCROLL REVEAL ─────────────────────────────────────── */
+.rev{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
 .rev.vis{opacity:1;transform:none}
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
 
-/* ── KEYFRAMES ── */
+/* ─── KEYFRAMES ─────────────────────────────────────────── */
 @keyframes fadeIn{to{opacity:1}}
 @keyframes slideDown{to{opacity:1;transform:none}}
-@keyframes fadeSlide{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.6}}
+@keyframes fadeSl{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* ── RESPONSIVE ── */
-@media(max-width:960px){
-  nav,.nav-cta{display:none}
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media(max-width:1020px){
+  .hdr{grid-template-columns:auto 1fr auto}
+  .nav-l,.nav-r{display:none}
+  .hdr-brand{text-align:left}
+  .hdr{grid-template-columns:1fr auto auto}
   .ham{display:flex}
-  .hero-wrap{grid-template-columns:1fr;text-align:center}
-  .hero-ctas,.hero-stats{justify-content:center}
-  .hero-img{display:none}
-  .despre-grid,.cab-grid,.con-grid{grid-template-columns:1fr;gap:40px}
-  .viz-grid{grid-template-columns:1fr}
-  .ft-grid{grid-template-columns:1fr 1fr}
-  .check-list{grid-template-columns:1fr}
+  .despre-g,.cab-g,.con-g{grid-template-columns:1fr;gap:40px}
+  .viz-g{grid-template-columns:1fr}
+  .ft-g{grid-template-columns:1fr 1fr}
   .f-row{grid-template-columns:1fr}
 }
 @media(max-width:580px){
   section{padding:72px 16px}
-  .modal-card{padding:36px 22px 28px}
-  .modal-slide h2{font-size:1.25rem}
-  .ft-grid{grid-template-columns:1fr;gap:28px}
-  .con-form,.con-info{padding:26px 18px}
+  .modal{padding:40px 20px 32px}
+  .m-slide h2{font-size:1.25rem}
+  .ft-g{grid-template-columns:1fr;gap:28px}
+  .con-form,.con-info{padding:24px 18px}
+  .hdr{padding:0 20px}
 }
 </style>
 </head>
 <body>
 
-<!-- ══════════════ MODAL ══════════════ -->
-<div class="modal-overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Bun venit">
-  <div class="modal-card">
-    <button class="modal-close" id="mClose" aria-label="Închide">&#x2715;</button>
-    <div class="modal-dots">
-      <div class="dot active" id="d1"></div>
-      <div class="dot" id="d2"></div>
-      <div class="dot" id="d3"></div>
+<!-- ════════════════════════════════════════════════
+     MODAL (3 slide-uri)
+════════════════════════════════════════════════ -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="modal">
+    <button class="m-close" id="mClose" aria-label="Închide">&#x2715;</button>
+    <div class="m-dots" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1">
+      <div class="m-dot active" id="md1"></div>
+      <div class="m-dot" id="md2"></div>
+      <div class="m-dot" id="md3"></div>
     </div>
 
     <!-- Slide 1 -->
-    <div class="modal-slide active" id="s1">
-      <div class="slide-icon" style="background:linear-gradient(135deg,#E7F9F5,#B0EBE0)">&#127968;</div>
-      <h2>Bun venit la Grădinița Boroboață!</h2>
-      <p class="slide-sub">Website Demo &mdash; Versiunea de prezentare</p>
-      <p>Un spațiu unde copiii se simt apreciați, înțeleși și gata să exploreze lumea!</p>
-      <div class="modal-btns center">
-        <button class="btn btn-teal" onclick="nextSlide()">Continuă &rarr;</button>
+    <div class="m-slide on" id="ms1">
+      <h2 id="m-title">Bun venit la Grădinița Boroboață</h2>
+      <p class="m-sub">Website Demo &mdash; Versiune de Prezentare</p>
+      <div class="m-rule"></div>
+      <p>O platformă digitală dedicată prezentării serviciilor și valorilor Grădiniței.</p>
+      <div class="m-btns c">
+        <button class="btn btn-teal" onclick="nextS()">Continuă</button>
       </div>
     </div>
 
     <!-- Slide 2 -->
-    <div class="modal-slide" id="s2">
-      <h2>Ce veți descoperi pe site</h2>
-      <ul class="check-list">
-        <li><span class="chk">&#10003;</span>Povestea grădiniței</li>
-        <li><span class="chk">&#10003;</span>Viziune &amp; Misiune</li>
-        <li><span class="chk">&#10003;</span>Serviciile oferite</li>
-        <li><span class="chk">&#10003;</span>Grupele de vârstă</li>
-        <li><span class="chk">&#10003;</span>Cabinet Psihopedagogic</li>
-        <li><span class="chk">&#10003;</span>Informații de contact</li>
-        <li><span class="chk">&#10003;</span>Locație și program</li>
-        <li><span class="chk">&#10003;</span>Galerie imagini (placeholder)</li>
+    <div class="m-slide" id="ms2">
+      <h2>Descoperă pe site</h2>
+      <div class="m-rule c"></div>
+      <ul class="m-list">
+        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Povestea Grădiniței</li>
+        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Viziunea și Misiunea</li>
+        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Servicii oferite</li>
+        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Informații despre grupele de vârstă</li>
+        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Cabinet Psihopedagogic</li>
+        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Detalii contact și locație</li>
+        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Galerie (placeholder)</li>
       </ul>
-      <div class="modal-btns">
-        <button class="btn btn-ghost" onclick="prevSlide()">&larr; Înapoi</button>
-        <button class="btn btn-teal" onclick="nextSlide()" style="flex:1">Următor &rarr;</button>
+      <div class="m-btns">
+        <button class="btn btn-ghost" onclick="prevS()">&larr; Înapoi</button>
+        <button class="btn btn-teal" onclick="nextS()" style="flex:1">Următor</button>
       </div>
     </div>
 
     <!-- Slide 3 -->
-    <div class="modal-slide" id="s3">
-      <div class="slide-icon" style="background:linear-gradient(135deg,#FFF5EE,#FFDDBB)">&#128203;</div>
-      <h2>Informație importantă</h2>
-      <div class="info-box">
-        <p>Acest website este în fază de prezentare. Toate elementele, conținuturile și designul pot fi personalizate în funcție de preferințele dumneavoastră. Vă invităm să explorați și să ne comunicați sugestiile!</p>
+    <div class="m-slide" id="ms3">
+      <h2>Informație</h2>
+      <div class="m-rule c"></div>
+      <div class="m-info">
+        <p>Acest website este în fază de prezentare. Orice element, conținut sau design poate fi personalizat conform preferințelor dumneavoastră.</p>
       </div>
-      <div class="modal-btns">
-        <button class="btn btn-ghost" onclick="prevSlide()">&larr; Înapoi</button>
-        <button class="btn btn-teal" onclick="closeModal()">Vezi Website-ul</button>
-        <a href="#contact" class="btn btn-orange" onclick="closeModal()">Contactează-ne</a>
+      <div class="m-btns">
+        <button class="btn btn-ghost" onclick="prevS()">&larr; Înapoi</button>
+        <button class="btn btn-teal" onclick="closeM()" style="flex:1">Vezi Website-ul</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════ HEADER ══════════════ -->
+<!-- ════════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════════ -->
 <header id="hdr">
   <div class="hdr">
-    <a href="#home" class="logo">
-      <div class="logo-mark">GB</div>
-      <div class="logo-text">
-        <span class="logo-name">Grădinița Boroboață</span>
-        <span class="logo-sub">Iași, Romania</span>
-      </div>
-    </a>
-    <nav id="nav">
+    <nav class="nav-l" aria-label="Navigare stânga">
       <a href="#home">Acasă</a>
       <a href="#despre">Despre Noi</a>
       <a href="#servicii">Servicii</a>
-      <a href="#grupe">Grupele</a>
-      <a href="#cabinet">Cabinet</a>
-      <a href="#contact">Contact</a>
     </nav>
-    <a href="#contact" class="btn btn-teal nav-cta" style="font-size:.8rem;padding:10px 20px">Program Vizită</a>
+
+    <div class="hdr-brand">
+      <a href="#home" class="hdr-name">Grădinița Boroboață</a>
+    </div>
+
+    <div class="nav-r">
+      <nav aria-label="Navigare dreapta">
+        <a href="#grupe">Grupele</a>
+        <a href="#cabinet">Cabinet</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a href="#contact" class="btn btn-teal btn-sm" style="margin-left:12px">Program Vizită</a>
+    </div>
+
     <button class="ham" id="ham" aria-label="Meniu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
 
-<div class="mob-nav" id="mobNav">
+<div class="mob" id="mob">
   <a href="#home" onclick="closeMob()">Acasă</a>
   <a href="#despre" onclick="closeMob()">Despre Noi</a>
   <a href="#servicii" onclick="closeMob()">Servicii</a>
@@ -610,61 +734,84 @@ footer{background:var(--dark);color:#fff;padding:64px 24px 0}
   <a href="#contact" class="btn btn-teal btn-full" onclick="closeMob()">Program Vizită</a>
 </div>
 
-<!-- ══════════════ HERO ══════════════ -->
-<section id="home" class="hero">
-  <div class="blob blob1" aria-hidden="true"></div>
-  <div class="blob blob2" aria-hidden="true"></div>
-  <div class="blob blob3" aria-hidden="true"></div>
-  <div class="hero-wrap wrap">
-    <div>
-      <div class="hero-badge">
-        <span class="pulse" aria-hidden="true"></span>
-        Înscrieri deschise &mdash; Grupa Baby &amp; Mică
-      </div>
-      <h1>Fiecare copil merită un loc unde să se simtă <em>apreciat</em></h1>
-      <p class="hero-desc">Grădinița Boroboață &mdash; Educație de calitate, cu grijă și pasiune, în inima Iașului.</p>
-      <div class="hero-ctas">
-        <a href="#despre" class="btn btn-teal">Află mai mult</a>
-        <a href="#contact" class="btn btn-outline">Programează o vizită</a>
-      </div>
-      <div class="hero-stats">
-        <div><div class="stat-num">4</div><div class="stat-lbl">Grupe active</div></div>
-        <div><div class="stat-num">10+</div><div class="stat-lbl">Ani experiență</div></div>
-        <div><div class="stat-num">100%</div><div class="stat-lbl">Dedicare</div></div>
-      </div>
+<!-- ════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════ -->
+<section id="home" class="hero" style="padding-top:80px">
+  <div class="dots" aria-hidden="true">
+    <div class="dot-shape db1"></div>
+    <div class="dot-shape db2"></div>
+    <div class="dot-shape db3"></div>
+    <div class="dot-shape db4"></div>
+    <div class="dot-shape ds1"></div>
+    <div class="dot-shape ds2"></div>
+    <div class="dot-shape ds3"></div>
+    <div class="dot-shape ds4"></div>
+    <div class="dot-shape ds5"></div>
+    <div class="dot-shape ds6"></div>
+    <div class="dot-shape ds7"></div>
+    <div class="dot-shape ds8"></div>
+    <div class="dot-shape do1"></div>
+    <div class="dot-shape do2"></div>
+    <div class="dot-shape do3"></div>
+    <div class="dot-shape do4"></div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow rev">Continuă înscrierea &mdash; Grupa Baby &amp; Mică</div>
+    <h1 class="hero-brand rev d1">Grădinița Boroboață</h1>
+    <p class="hero-tagline rev d2">Fiecare copil merită un loc unde să se simtă apreciat</p>
+    <div class="hero-ctas rev d3">
+      <a href="#contact" class="btn btn-teal">Program Vizită</a>
+      <a href="#despre" class="btn btn-outline-dark">Află mai mult</a>
     </div>
-    <div class="hero-img" aria-hidden="true">
-      <div class="ph-icon-wrap">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="rgba(255,255,255,.85)"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+    <div class="hero-ph rev d4" aria-hidden="true">
+      <div class="ph-wrap">
+        <div class="ph-ico">
+          <svg width="20" height="20" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21,15 16,10 5,21"/>
+          </svg>
+        </div>
+        <p class="ph-label">Spațiu pentru fotografie principală</p>
       </div>
-      <p class="ph-txt">Spațiu pentru fotografie principală<br><span style="font-size:.78rem;opacity:.72">Imagine reprezentativă grădiniță</span></p>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ DESPRE NOI ══════════════ -->
+<!-- ════════════════════════════════════════════════
+     DESPRE NOI
+════════════════════════════════════════════════ -->
 <section id="despre">
   <div class="wrap">
-    <div class="despre-grid">
-      <div class="img-ph teal rev" aria-hidden="true">
-        <div class="ico">&#127968;</div>
-        <p class="lbl">Spațiu pentru fotografie<br><span style="font-size:.78rem;opacity:.8">Clădirea grădiniței</span></p>
+    <div class="despre-g">
+      <div class="img-ph t rev" aria-hidden="true">
+        <div class="ph-wrap">
+          <div class="ph-ico">
+            <svg width="20" height="20" viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21,15 16,10 5,21"/>
+            </svg>
+          </div>
+          <p class="ph-lbl">Spațiu pentru fotografie</p>
+        </div>
       </div>
       <div class="rev d1">
         <span class="sec-label">Povestea noastră</span>
+        <div class="sec-rule"></div>
         <h2 class="sec-h">Despre Grădinița Boroboață</h2>
-        <p style="color:var(--gray);line-height:1.8;margin-bottom:14px">
+        <p style="color:var(--mid);line-height:1.85;margin-bottom:14px">
           Grădinița Boroboață este un loc special unde copiii descoperă lumea cu curiozitate și bucurie. Oferim un mediu cald, sigur și stimulativ, în care fiecare copil este văzut, auzit și apreciat pentru unicitatea sa.
         </p>
-        <p style="color:var(--gray);line-height:1.8">
-          Echipa noastră de educatoare dedicate și psihopedagog specializat lucrează împreună pentru a asigura o dezvoltare armonioasă — cognitivă, emoțională și socială — adaptată fiecărei etape de vârstă.
+        <p style="color:var(--mid);line-height:1.85">
+          Echipa noastră de educatoare dedicate și psihopedagog specializat lucrează împreună pentru a asigura o dezvoltare armonioasă — cognitivă, emoțională și socială.
         </p>
         <ul class="feat-list">
-          <li><span class="feat-ico">&#10003;</span>Personal calificat și dedicat</li>
-          <li><span class="feat-ico">&#10003;</span>Program flexibil adaptat familiei</li>
-          <li><span class="feat-ico">&#10003;</span>Spații moderne și sigure</li>
-          <li><span class="feat-ico">&#10003;</span>Activități educaționale variate</li>
-          <li><span class="feat-ico">&#10003;</span>Cabinet psihopedagogic propriu</li>
+          <li><span class="feat-dot"></span>Personal calificat și dedicat</li>
+          <li><span class="feat-dot"></span>Program flexibil adaptat familiei</li>
+          <li><span class="feat-dot"></span>Spații moderne și sigure</li>
+          <li><span class="feat-dot"></span>Activități educaționale variate</li>
+          <li><span class="feat-dot"></span>Cabinet psihopedagogic propriu</li>
         </ul>
         <a href="#contact" class="btn btn-teal" style="margin-top:8px">Contactează-ne</a>
       </div>
@@ -672,67 +819,110 @@ footer{background:var(--dark);color:#fff;padding:64px 24px 0}
   </div>
 </section>
 
-<!-- ══════════════ VIZIUNE & MISIUNE ══════════════ -->
+<!-- ════════════════════════════════════════════════
+     VIZIUNE & MISIUNE
+════════════════════════════════════════════════ -->
 <section id="viziune">
   <div class="wrap">
     <div class="sec-head c">
       <span class="sec-label">Valorile noastre</span>
+      <div class="sec-rule c"></div>
       <h2 class="sec-h rev">Viziune &amp; Misiune</h2>
       <p class="sec-d rev d1">Credem că educația timpurie este fundația pe care se construiesc personalități puternice, echilibrate și fericite.</p>
     </div>
-    <div class="viz-grid">
-      <div class="viz-card tc rev d1">
-        <div class="viz-ico">&#128065;</div>
+    <div class="viz-g">
+      <div class="viz-card rev d1">
+        <span class="viz-accent t"></span>
         <h3>Viziunea noastră</h3>
-        <p>Ne dorim ca Grădinița Boroboață să fie un reper de excelență în educația timpurie din Iași — un loc unde copiii iubesc să vină în fiecare zi și unde descoperă lumea cu entuziasm.</p>
+        <p>Ne dorim ca Grădinița Boroboață să fie un reper de excelență în educația timpurie din Iași — un loc unde copiii iubesc să vină în fiecare zi, unde se simt în siguranță și unde descoperă lumea cu entuziasm.</p>
         <p>Vizăm o comunitate familie-grădiniță care lucrează împreună pentru binele fiecărui copil.</p>
       </div>
-      <div class="viz-card oc rev d2">
-        <div class="viz-ico">&#127919;</div>
+      <div class="viz-card rev d2">
+        <span class="viz-accent o"></span>
         <h3>Misiunea noastră</h3>
         <p>Misiunea noastră este să oferim fiecărui copil un mediu educațional stimulativ, care îi respectă ritmul propriu de dezvoltare și îi cultivă dorința de a învăța.</p>
-        <p>Prin joc, explorare și conexiuni autentice pregătim copiii pentru viitor cu încredere, empatie și curiozitate.</p>
+        <p>Prin joc, explorare și conexiuni autentice, pregătim copiii pentru viitor cu încredere, empatie și curiozitate.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ SERVICII ══════════════ -->
+<!-- ════════════════════════════════════════════════
+     SERVICII
+════════════════════════════════════════════════ -->
 <section id="servicii">
   <div class="wrap">
     <div class="sec-head c">
       <span class="sec-label or">Ce oferim</span>
+      <div class="sec-rule or c"></div>
       <h2 class="sec-h rev">Serviciile noastre</h2>
       <p class="sec-d rev d1">Un pachet complet de servicii educaționale și de îngrijire, gândit cu atenție pentru nevoile copilului dumneavoastră.</p>
     </div>
-    <div class="srv-grid">
-      <div class="srv-card c1 rev d1">
-        <div class="srv-ico">&#127891;</div>
+    <div class="srv-g">
+      <div class="srv-card sc1 rev d1">
+        <div class="srv-ico-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        <div class="card-line"></div>
         <h3>Educație timpurie</h3>
         <p>Program educațional structurat, adaptat vârstei, cu activități zilnice care stimulează gândirea creativă și logică.</p>
       </div>
-      <div class="srv-card c2 rev d2">
-        <div class="srv-ico">&#129308;</div>
+      <div class="srv-card sc2 rev d2">
+        <div class="srv-ico-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <div class="card-line"></div>
         <h3>Îngrijire afectuoasă</h3>
         <p>Personal specializat care asigură un mediu cald, sigur și iubitor, în care fiecare copil se simte acasă.</p>
       </div>
-      <div class="srv-card c3 rev d3">
-        <div class="srv-ico">&#127381;</div>
+      <div class="srv-card sc3 rev d3">
+        <div class="srv-ico-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          </svg>
+        </div>
+        <div class="card-line"></div>
         <h3>Activități creative</h3>
         <p>Ateliere de artă, muzică, dans și teatru care dezvoltă expresivitatea și creativitatea copilului.</p>
       </div>
-      <div class="srv-card c4 rev d1">
-        <div class="srv-ico">&#129504;</div>
+      <div class="srv-card sc4 rev d1">
+        <div class="srv-ico-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <div class="card-line"></div>
         <h3>Suport psihopedagogic</h3>
         <p>Cabinet psihopedagogic propriu cu specialist dedicat pentru evaluare, consiliere și sprijin individualizat.</p>
       </div>
-      <div class="srv-card c5 rev d2">
-        <div class="srv-ico">&#127807;</div>
+      <div class="srv-card sc5 rev d2">
+        <div class="srv-ico-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path d="M17 8C8 10 5.9 16.17 3.82 21"/>
+            <path d="M9.08 9.01C9 10.6 8.42 12.1 7.5 13.5"/>
+            <path d="M17 8C17 8 18 13 11 16"/>
+          </svg>
+        </div>
+        <div class="card-line"></div>
         <h3>Activități în aer liber</h3>
         <p>Spații de joacă amenajate și activități outdoor care promovează mișcarea, natura și socializarea.</p>
       </div>
-      <div class="srv-card c6 rev d3">
-        <div class="srv-ico">&#127860;</div>
+      <div class="srv-card sc6 rev d3">
+        <div class="srv-ico-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path d="M3 11l19-9-9 19-2-8-8-2z"/>
+          </svg>
+        </div>
+        <div class="card-line"></div>
         <h3>Masă și gustări sănătoase</h3>
         <p>Meniu zilnic echilibrat, preparat cu ingrediente proaspete, adaptat nevoilor nutriționale ale copiilor.</p>
       </div>
@@ -740,75 +930,103 @@ footer{background:var(--dark);color:#fff;padding:64px 24px 0}
   </div>
 </section>
 
-<!-- ══════════════ GRUPELE ══════════════ -->
-<section id="grupe" style="background:var(--gray-l)">
+<!-- ════════════════════════════════════════════════
+     GRUPELE
+════════════════════════════════════════════════ -->
+<section id="grupe">
   <div class="wrap">
     <div class="sec-head c">
       <span class="sec-label">Vârste &amp; Grupe</span>
+      <div class="sec-rule c"></div>
       <h2 class="sec-h rev">Grupele disponibile</h2>
       <p class="sec-d rev d1">Grupe specializate pentru fiecare etapă de vârstă, cu educatoare dedicate și curriculum adaptat.</p>
     </div>
-    <div class="grp-grid">
-      <div class="grp-card baby rev d1">
-        <span class="age-badge">1 – 2 ani</span>
+    <div class="grp-g">
+      <div class="grp-card g1 rev d1">
+        <span class="age-pill">1 &ndash; 2 ani</span>
         <h3>Grupa Baby</h3>
         <p>Îngrijire specializată și stimulare senzorială pentru cei mai mici. Un mediu cald și securizant în care bebelușul explorează primele experiențe.</p>
-        <div class="grp-status open-status"><span class="sdot"></span>Locuri disponibile</div>
+        <div class="grp-status s-open"><span class="s-dot"></span>Locuri disponibile</div>
       </div>
-      <div class="grp-card mica rev d2">
-        <span class="age-badge">2 – 3 ani</span>
+      <div class="grp-card g2 rev d2">
+        <span class="age-pill">2 &ndash; 3 ani</span>
         <h3>Grupa Mică</h3>
         <p>Activități ludice care dezvoltă autonomia, limbajul și primele interacțiuni sociale. Tranziție blândă spre viața de grădiniță.</p>
-        <div class="grp-status open-status"><span class="sdot"></span>Locuri disponibile</div>
+        <div class="grp-status s-open"><span class="s-dot"></span>Locuri disponibile</div>
       </div>
-      <div class="grp-card mij rev d3">
-        <span class="age-badge">3 – 4 ani</span>
+      <div class="grp-card g3 rev d3">
+        <span class="age-pill">3 &ndash; 4 ani</span>
         <h3>Grupa Mijlocie</h3>
-        <p>Joc structurat, activități creative și primele concepte matematice. Copilul începe să înțeleagă lumea din jurul său.</p>
-        <div class="grp-status lim-status"><span class="sdot"></span>Locuri limitate</div>
+        <p>Joc structurat, activități creative și primele concepte matematice și de limbaj. Copilul înțelege lumea din jurul său.</p>
+        <div class="grp-status s-lim"><span class="s-dot"></span>Locuri limitate</div>
       </div>
-      <div class="grp-card mare rev d4">
-        <span class="age-badge">4 – 6 ani</span>
+      <div class="grp-card g4 rev d4">
+        <span class="age-pill">4 &ndash; 6 ani</span>
         <h3>Grupa Mare</h3>
         <p>Pregătire pentru școală prin activități complexe și proiecte interdisciplinare. Dezvoltarea competențelor sociale și cognitive.</p>
-        <div class="grp-status lim-status"><span class="sdot"></span>Locuri limitate</div>
+        <div class="grp-status s-lim"><span class="s-dot"></span>Locuri limitate</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ CABINET ══════════════ -->
+<!-- ════════════════════════════════════════════════
+     CABINET PSIHOPEDAGOGIC
+════════════════════════════════════════════════ -->
 <section id="cabinet">
   <div class="wrap">
-    <div class="cab-grid">
+    <div class="cab-g">
       <div class="rev">
-        <span class="sec-label wh">Suport specializat</span>
-        <h2 class="sec-h wh">Cabinet Psihopedagogic</h2>
-        <p class="sec-d wh" style="margin-bottom:0">Un serviciu esențial — fiecare copil beneficiază de atenție individualizată și suport profesionist.</p>
+        <span class="sec-label">Suport specializat</span>
+        <div class="sec-rule"></div>
+        <h2 class="sec-h">Cabinet Psihopedagogic</h2>
+        <p style="color:var(--mid);font-size:.95rem;line-height:1.85;margin-bottom:0">
+          Un serviciu esențial care face diferența &mdash; fiecare copil beneficiază de atenție individualizată și suport profesionist.
+        </p>
         <div class="cab-feats">
           <div class="cab-feat">
-            <div class="cab-feat-ico">&#128269;</div>
+            <div class="cab-feat-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </div>
             <div>
               <h4>Evaluare psihopedagogică</h4>
               <p>Identificarea nevoilor individuale și elaborarea unui plan de intervenție personalizat.</p>
             </div>
           </div>
           <div class="cab-feat">
-            <div class="cab-feat-ico">&#128172;</div>
+            <div class="cab-feat-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
             <div>
               <h4>Consiliere pentru părinți</h4>
               <p>Sesiuni de consiliere și ghidaj în gestionarea provocărilor de creștere și educație.</p>
             </div>
           </div>
           <div class="cab-feat">
-            <div class="cab-feat-ico">&#129504;</div>
+            <div class="cab-feat-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
             <div>
               <h4>Terapie prin joc</h4>
               <p>Tehnici specifice vârstei pentru dezvoltarea emoțională, socială și cognitivă.</p>
             </div>
           </div>
           <div class="cab-feat">
-            <div class="cab-feat-ico">&#128218;</div>
+            <div class="cab-feat-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+            </div>
             <div>
               <h4>Rapoarte de progres</h4>
               <p>Urmărirea evoluției copilului și comunicarea transparentă cu familia.</p>
@@ -817,19 +1035,33 @@ footer{background:var(--dark);color:#fff;padding:64px 24px 0}
         </div>
       </div>
       <div class="rev d2">
-        <div class="img-ph purple" style="border-radius:var(--r32);aspect-ratio:3/4" aria-hidden="true">
-          <div class="ico">&#127891;</div>
-          <p class="lbl">Spațiu pentru fotografie<br><span style="font-size:.78rem;opacity:.8">Cabinet psihopedagogic</span></p>
+        <div class="img-ph p" style="border-radius:var(--r32);aspect-ratio:3/4" aria-hidden="true">
+          <div class="ph-wrap">
+            <div class="ph-ico">
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21,15 16,10 5,21"/>
+              </svg>
+            </div>
+            <p class="ph-lbl">Spațiu pentru fotografie</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ MAP ══════════════ -->
-<div class="map-wrap" role="img" aria-label="Locația Grădinița Boroboată">
-  <div class="map-pin">
-    <div class="map-pin-ico">&#128205;</div>
+<!-- ════════════════════════════════════════════════
+     MAP
+════════════════════════════════════════════════ -->
+<div class="map-ph" role="img" aria-label="Locația Grădinița Boroboată">
+  <div class="map-card">
+    <div class="map-ico">
+      <svg width="18" height="18" viewBox="0 0 24 24">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+    </div>
     <div>
       <h4>Grădinița Boroboață</h4>
       <p>Str. Locotenent Popovici nr. 10<br>Iași, Romania</p>
@@ -838,100 +1070,126 @@ footer{background:var(--dark);color:#fff;padding:64px 24px 0}
   <p class="map-note">Spațiu pentru Google Maps embed</p>
 </div>
 
-<!-- ══════════════ CONTACT ══════════════ -->
+<!-- ════════════════════════════════════════════════
+     CONTACT
+════════════════════════════════════════════════ -->
 <section id="contact">
   <div class="wrap">
     <div class="sec-head c">
       <span class="sec-label or">Suntem aici</span>
+      <div class="sec-rule or c"></div>
       <h2 class="sec-h rev">Contactați-ne</h2>
-      <p class="sec-d rev d1">Avem locuri disponibile! Contactați-ne pentru a programa o vizită sau pentru mai multe informații.</p>
+      <p class="sec-d rev d1">Avem locuri disponibile. Contactați-ne pentru a programa o vizită sau pentru mai multe informații.</p>
     </div>
-    <div class="con-grid">
+    <div class="con-g">
       <div class="rev">
         <div class="con-info">
           <div class="con-item">
-            <div class="con-ico">&#128205;</div>
+            <div class="con-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
             <div>
               <h4>Adresă</h4>
               <p>Str. Locotenent Popovici nr. 10<br>Iași, Romania</p>
             </div>
           </div>
           <div class="con-item">
-            <div class="con-ico">&#128222;</div>
+            <div class="con-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.93a16 16 0 0 0 6 6l.91-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
             <div>
               <h4>Telefon</h4>
               <a href="tel:+40747630664">0747 630 664</a>
             </div>
           </div>
           <div class="con-item">
-            <div class="con-ico">&#128231;</div>
+            <div class="con-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
             <div>
               <h4>Email</h4>
               <a href="mailto:gradinita.boroboata@gmail.com">gradinita.boroboata@gmail.com</a>
             </div>
           </div>
           <div class="con-item">
-            <div class="con-ico">&#128336;</div>
+            <div class="con-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
             <div>
               <h4>Program</h4>
               <p>Luni &ndash; Vineri: 07:00 &ndash; 18:00</p>
             </div>
           </div>
-          <div class="open-pill">
-            <span class="sdot" style="width:8px;height:8px;background:#2ECC71;border-radius:50%;animation:pulse 2s infinite;display:inline-block"></span>
-            <span>DESCHISĂ &mdash; Înscrierea continuă</span>
+          <div class="open-tag">
+            <span class="s-dot"></span>
+            <span>Deschisă &mdash; Înscrierea continuă</span>
           </div>
         </div>
       </div>
       <div class="rev d1">
         <div class="con-form">
           <h3>Trimiteți un mesaj</h3>
-          <p class="form-sub">Completați formularul și vă vom contacta în cel mai scurt timp.</p>
-          <div id="formBody">
+          <p class="f-sub">Completați formularul și vă vom contacta în cel mai scurt timp.</p>
+          <div id="fBody">
             <div class="f-row">
               <div class="f-grp">
-                <label for="fName">Prenume *</label>
-                <input type="text" id="fName" placeholder="Ana" autocomplete="given-name">
-                <p class="err-msg" id="fNameErr">Câmp obligatoriu</p>
+                <label for="fN">Prenume *</label>
+                <input type="text" id="fN" placeholder="Ana" autocomplete="given-name">
+                <p class="err-t" id="fNe">Câmp obligatoriu</p>
               </div>
               <div class="f-grp">
-                <label for="lName">Nume *</label>
-                <input type="text" id="lName" placeholder="Popescu" autocomplete="family-name">
-                <p class="err-msg" id="lNameErr">Câmp obligatoriu</p>
+                <label for="fL">Nume *</label>
+                <input type="text" id="fL" placeholder="Popescu" autocomplete="family-name">
+                <p class="err-t" id="fLe">Câmp obligatoriu</p>
               </div>
             </div>
             <div class="f-grp">
-              <label for="fEmail">Email *</label>
-              <input type="email" id="fEmail" placeholder="ana.popescu@gmail.com" autocomplete="email">
-              <p class="err-msg" id="fEmailErr">Introduceți un email valid</p>
+              <label for="fE">Email *</label>
+              <input type="email" id="fE" placeholder="ana.popescu@gmail.com" autocomplete="email">
+              <p class="err-t" id="fEe">Introduceți un email valid</p>
             </div>
             <div class="f-grp">
-              <label for="fPhone">Telefon</label>
-              <input type="tel" id="fPhone" placeholder="07XX XXX XXX" autocomplete="tel">
+              <label for="fP">Telefon</label>
+              <input type="tel" id="fP" placeholder="07XX XXX XXX" autocomplete="tel">
             </div>
             <div class="f-grp">
-              <label for="fGrupa">Grupa de interes</label>
-              <select id="fGrupa">
-                <option value="">Selectați grupa...</option>
-                <option>Grupa Baby (1–2 ani)</option>
-                <option>Grupa Mică (2–3 ani)</option>
-                <option>Grupa Mijlocie (3–4 ani)</option>
-                <option>Grupa Mare (4–6 ani)</option>
+              <label for="fG">Grupa de interes</label>
+              <select id="fG">
+                <option value="">Selectați...</option>
+                <option>Grupa Baby (1&ndash;2 ani)</option>
+                <option>Grupa Mică (2&ndash;3 ani)</option>
+                <option>Grupa Mijlocie (3&ndash;4 ani)</option>
+                <option>Grupa Mare (4&ndash;6 ani)</option>
                 <option>Alte informații</option>
               </select>
             </div>
             <div class="f-grp">
-              <label for="fMsg">Mesaj *</label>
-              <textarea id="fMsg" placeholder="Descrieți pe scurt cererea sau întrebarea dumneavoastră..."></textarea>
-              <p class="err-msg" id="fMsgErr">Câmp obligatoriu</p>
+              <label for="fM">Mesaj *</label>
+              <textarea id="fM" placeholder="Descrieți pe scurt cererea dumneavoastră..."></textarea>
+              <p class="err-t" id="fMe">Câmp obligatoriu</p>
             </div>
-            <button class="btn btn-teal btn-full" onclick="submitForm()">Trimite mesajul &rarr;</button>
+            <button class="btn btn-teal btn-full" onclick="sendForm()">Trimite mesajul</button>
           </div>
-          <div class="form-ok" id="formOk">
-            <div class="ok-ico">&#10003;</div>
-            <h3 style="margin-bottom:6px">Mesaj trimis!</h3>
-            <p style="color:var(--gray)">Vă mulțumim! Vă vom contacta în cel mai scurt timp.</p>
-            <button class="btn btn-ghost" onclick="resetForm()" style="margin-top:18px">Trimite alt mesaj</button>
+          <div class="form-ok" id="fOk">
+            <div class="ok-ico">
+              <svg width="24" height="24" viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <h3 style="margin-bottom:6px">Mesaj trimis</h3>
+            <p style="color:var(--mid)">Vă mulțumim. Vă vom contacta în cel mai scurt timp.</p>
+            <button class="btn btn-ghost" onclick="resetForm()" style="margin-top:16px">Trimite alt mesaj</button>
           </div>
         </div>
       </div>
@@ -939,22 +1197,24 @@ footer{background:var(--dark);color:#fff;padding:64px 24px 0}
   </div>
 </section>
 
-<!-- ══════════════ FOOTER ══════════════ -->
+<!-- ════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════ -->
 <footer>
   <div class="ft-wrap">
-    <div class="ft-grid">
+    <div class="ft-g">
       <div class="ft-brand">
-        <div class="logo-mark" style="margin-bottom:14px">GB</div>
-        <p>Grădinița Boroboață &mdash; Un loc unde copiii cresc frumos, cu grijă, pasiune și profesionalism. Iași, Romania.</p>
-        <div class="socials" aria-label="Rețele sociale">
+        <span class="brand-tag">Grădinița Boroboață</span>
+        <p>Un loc unde copiii cresc frumos, cu grijă, pasiune și profesionalism.<br>Iași, Romania.</p>
+        <div class="socs" aria-label="Rețele sociale">
           <a href="#" class="soc" aria-label="Facebook">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </a>
           <a href="#" class="soc" aria-label="Instagram">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r=".5" fill="rgba(255,255,255,.6)"/></svg>
           </a>
           <a href="#" class="soc" aria-label="YouTube">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="rgba(255,255,255,.5)" stroke="none"/></svg>
           </a>
         </div>
       </div>
@@ -987,55 +1247,56 @@ footer{background:var(--dark);color:#fff;padding:64px 24px 0}
         </ul>
       </div>
     </div>
-    <div class="ft-bottom">
+    <div class="ft-bot">
       <p>&copy; 2026 Grădinița Boroboață. Toate drepturile rezervate.</p>
-      <p>Website demo &mdash; prezentare</p>
+      <p>Website demo &mdash; versiune de prezentare</p>
     </div>
   </div>
 </footer>
 
 <!-- BACK TO TOP -->
 <button class="btt" id="btt" aria-label="Înapoi sus" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  <svg width="18" height="18" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
 </button>
 
 <script>
-/* ── MODAL ── */
+/* ── MODAL ─────────────────────────────────────── */
 let cur = 1;
 document.body.style.overflow = 'hidden';
 
-function updateDots() {
+function updDots() {
   [1,2,3].forEach(i => {
-    const d = document.getElementById('d'+i);
-    d.className = 'dot' + (i < cur ? ' done' : i === cur ? ' active' : '');
+    const d = document.getElementById('md'+i);
+    d.className = 'm-dot' + (i < cur ? ' done' : i === cur ? ' active' : '');
   });
+  document.getElementById('overlay').querySelector('[role="progressbar"]').setAttribute('aria-valuenow', cur);
 }
-function showSlide(n) {
-  document.querySelectorAll('.modal-slide').forEach(s => s.classList.remove('active'));
-  document.getElementById('s'+n).classList.add('active');
-  cur = n; updateDots();
+function showS(n) {
+  document.querySelectorAll('.m-slide').forEach(s => s.classList.remove('on'));
+  document.getElementById('ms'+n).classList.add('on');
+  cur = n; updDots();
 }
-function nextSlide() { if (cur < 3) showSlide(cur + 1); }
-function prevSlide() { if (cur > 1) showSlide(cur - 1); }
-function closeModal() {
+function nextS() { if (cur < 3) showS(cur + 1); }
+function prevS() { if (cur > 1) showS(cur - 1); }
+function closeM() {
   const o = document.getElementById('overlay');
-  o.style.transition = 'opacity .3s ease'; o.style.opacity = '0';
-  setTimeout(() => { o.style.display = 'none'; document.body.style.overflow = ''; }, 300);
+  o.style.transition = 'opacity .35s ease';
+  o.style.opacity = '0';
+  setTimeout(() => { o.style.display = 'none'; document.body.style.overflow = ''; }, 350);
 }
-document.getElementById('mClose').addEventListener('click', closeModal);
-document.getElementById('overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.getElementById('mClose').addEventListener('click', closeM);
+document.getElementById('overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeM(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeM(); });
 
-/* ── HEADER SCROLL ── */
+/* ── HEADER ─────────────────────────────────────── */
 window.addEventListener('scroll', () => {
-  document.getElementById('hdr').style.boxShadow = window.scrollY > 20
-    ? '0 4px 24px rgba(0,0,0,.13)' : '0 2px 8px rgba(0,0,0,.08)';
-  const btt = document.getElementById('btt');
-  window.scrollY > 400 ? btt.classList.add('show') : btt.classList.remove('show');
+  const h = document.getElementById('hdr');
+  h.style.borderBottomColor = window.scrollY > 10 ? 'var(--border)' : 'var(--border)';
+  document.getElementById('btt').classList.toggle('show', window.scrollY > 400);
 });
 
-/* ── HAMBURGER ── */
-const ham = document.getElementById('ham'), mob = document.getElementById('mobNav');
+/* ── HAMBURGER ──────────────────────────────────── */
+const ham = document.getElementById('ham'), mob = document.getElementById('mob');
 ham.addEventListener('click', () => {
   const open = mob.classList.toggle('open');
   ham.classList.toggle('open', open);
@@ -1043,68 +1304,65 @@ ham.addEventListener('click', () => {
 });
 function closeMob() {
   mob.classList.remove('open'); ham.classList.remove('open');
-  ham.setAttribute('aria-expanded', 'false');
+  ham.setAttribute('aria-expanded','false');
 }
 document.addEventListener('click', e => {
   if (!ham.contains(e.target) && !mob.contains(e.target)) closeMob();
 });
 
-/* ── SCROLL REVEAL ── */
+/* ── SCROLL REVEAL ──────────────────────────────── */
 const ro = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); ro.unobserve(e.target); }});
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
 document.querySelectorAll('.rev').forEach(el => ro.observe(el));
 
-/* ── ACTIVE NAV ── */
-const secs = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('nav a');
+/* ── ACTIVE NAV ─────────────────────────────────── */
+const navAs = document.querySelectorAll('nav a');
 const secObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
-      navLinks.forEach(a => {
-        const active = a.getAttribute('href') === '#' + e.target.id;
-        a.classList.toggle('active', active);
+      navAs.forEach(a => {
+        a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id);
       });
     }
   });
 }, { threshold: 0.45 });
-secs.forEach(s => secObs.observe(s));
+document.querySelectorAll('section[id]').forEach(s => secObs.observe(s));
 
-/* ── FORM ── */
-const vFields = [
-  { id:'fName',  err:'fNameErr',  ok: v => v.trim().length > 0 },
-  { id:'lName',  err:'lNameErr',  ok: v => v.trim().length > 0 },
-  { id:'fEmail', err:'fEmailErr', ok: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-  { id:'fMsg',   err:'fMsgErr',   ok: v => v.trim().length > 5 },
+/* ── FORM ───────────────────────────────────────── */
+const fields = [
+  { id:'fN', err:'fNe', ok: v => v.trim().length > 0 },
+  { id:'fL', err:'fLe', ok: v => v.trim().length > 0 },
+  { id:'fE', err:'fEe', ok: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+  { id:'fM', err:'fMe', ok: v => v.trim().length > 5 },
 ];
-vFields.forEach(f => {
+fields.forEach(f => {
   document.getElementById(f.id).addEventListener('input', function() {
     this.classList.remove('err');
     document.getElementById(f.err).classList.remove('show');
   });
 });
-function submitForm() {
+function sendForm() {
   let ok = true;
-  vFields.forEach(f => {
-    const el = document.getElementById(f.id);
-    const valid = f.ok(el.value);
+  fields.forEach(f => {
+    const el = document.getElementById(f.id), valid = f.ok(el.value);
     el.classList.toggle('err', !valid);
     document.getElementById(f.err).classList.toggle('show', !valid);
     if (!valid) ok = false;
   });
   if (ok) {
-    document.getElementById('formBody').style.display = 'none';
-    document.getElementById('formOk').classList.add('show');
+    document.getElementById('fBody').style.display = 'none';
+    document.getElementById('fOk').classList.add('show');
   }
 }
 function resetForm() {
-  ['fName','lName','fEmail','fPhone','fMsg'].forEach(id => {
-    const el = document.getElementById(id); if (el) { el.value = ''; el.classList.remove('err'); }
+  ['fN','fL','fE','fP','fM'].forEach(id => {
+    const el = document.getElementById(id); if(el){el.value='';el.classList.remove('err');}
   });
-  document.getElementById('fGrupa').value = '';
-  vFields.forEach(f => document.getElementById(f.err).classList.remove('show'));
-  document.getElementById('formBody').style.display = 'block';
-  document.getElementById('formOk').classList.remove('show');
+  document.getElementById('fG').value = '';
+  fields.forEach(f => document.getElementById(f.err).classList.remove('show'));
+  document.getElementById('fBody').style.display = 'block';
+  document.getElementById('fOk').classList.remove('show');
 }
 </script>
 </body>

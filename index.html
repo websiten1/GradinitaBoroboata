@@ -8,216 +8,143 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ─── RESET ─────────────────────────────────────────────── */
+/* ─── RESET ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{
-  font-family:'Outfit',sans-serif;font-size:17px;line-height:1.7;
-  color:#3D3D3D;background:#fff;overflow-x:hidden;
-}
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:#F0F0F0}
-::-webkit-scrollbar-thumb{background:#5B7C99;border-radius:2px}
+body{font-family:'Outfit',sans-serif;font-size:17px;line-height:1.7;color:#333;background:#fff;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#f4f4f4}
+::-webkit-scrollbar-thumb{background:#2ECCC1;border-radius:3px}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:700;line-height:1.2;color:#333}
 
-/* ─── TOKENS ─────────────────────────────────────────────── */
+/* ─── VARIABLES ── */
 :root{
-  /* neutrals */
-  --cream:     #FFFFFF;
-  --cream-d:   #F8F8F8;
-  --cream-dd:  #F0F0F0;
-  --white:     #FFFFFF;
-  --dark:      #2C2C2C;
-  --text:      #3D3D3D;
-  --mid:       #7A7A7A;
-  --border:    #E5E5E5;
-
-  /* primary — Albastru mat #5B7C99 */
-  --teal:      #5B7C99;
-  --teal-d:    #4A6880;
-  --teal-l:    #8BA8C0;
-  --teal-xl:   #C2D4E3;
-  --teal-bg:   #EEF2F6;
-
-  /* secondary — Roșu mat #A85555 */
-  --orange:    #A85555;
-  --orange-l:  #C48F8F;
-  --orange-bg: #F5EAEA;
-
-  /* accent 3 — Ocru mat #A0956B */
-  --yellow:    #A0956B;
-  --yellow-l:  #C0B898;
-  --yellow-bg: #F4F2EC;
-
-  /* accent 4 — Verde mat #6B8E6F */
-  --green:     #6B8E6F;
-  --green-l:   #96B29A;
-  --green-bg:  #EEF3EE;
-
-  /* accent 5 — Mov mat #8B6B88 */
-  --purple:    #8B6B88;
-  --purple-l:  #B09AAE;
-  --purple-bg: #F2EEF2;
-
+  --teal:   #2ECCC1; --teal-d: #1AADA3; --teal-l: #7FE3DE; --teal-bg: #E8FAF9;
+  --orange: #FF9D5C; --orange-d:#E8832F;
+  --red:    #FF6B6B; --blue:    #4D96FF;
+  --green:  #52C41A; --pink:    #FF85C0; --yellow: #FFD666;
+  --dark:#333; --text:#444; --mid:#777; --border:#E8E8E8;
   --r8:8px;--r16:16px;--r24:24px;--r32:32px;--r48:48px;
-  --sh1:0 2px 12px rgba(0,0,0,.05);
-  --sh2:0 4px 28px rgba(0,0,0,.08);
-  --sh3:0 8px 56px rgba(0,0,0,.11);
+  --sh1:0 2px 12px rgba(0,0,0,.06);
+  --sh2:0 4px 28px rgba(0,0,0,.1);
+  --sh3:0 8px 56px rgba(0,0,0,.13);
   --tr:all .3s ease;
 }
 
-h1,h2,h3,h4,h5{font-family:'Playfair Display',serif;font-weight:700;line-height:1.2;color:var(--dark)}
+/* ─── BUBBLES ── */
+.bbl{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.b{position:absolute;border-radius:50%;transition:transform .4s ease}
+.b.r{background:var(--red)}
+.b.bl{background:var(--blue)}
+.b.g{background:var(--green)}
+.b.pk{background:var(--pink)}
+.b.y{background:var(--yellow)}
+.b.t{background:var(--teal)}
+.b.or{background:var(--orange)}
 
-/* ─── MODAL ─────────────────────────────────────────────── */
+/* ─── MODAL ── */
 .overlay{
   position:fixed;inset:0;z-index:1000;
-  background:rgba(44,44,44,.28);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  background:rgba(30,30,30,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   display:flex;align-items:center;justify-content:center;
-  opacity:0;animation:fadeIn .5s ease .1s forwards;
+  opacity:0;animation:fadeIn .4s ease .1s forwards;
 }
 .modal{
   background:#fff;border-radius:var(--r32);
-  box-shadow:var(--sh3);border:1px solid var(--border);
+  box-shadow:var(--sh3);border:1px solid #eee;
   max-width:560px;width:calc(100% - 32px);
-  padding:56px 48px 48px;position:relative;
-  opacity:0;transform:translateY(-20px);
-  animation:slideDown .5s ease .25s forwards;
+  padding:56px 48px 48px;position:relative;overflow:hidden;
+  opacity:0;transform:translateY(-18px);
+  animation:slideDown .45s ease .2s forwards;
 }
-@media(max-width:540px){.modal{padding:44px 24px 36px}}
+/* modal bubbles */
+.modal .bbl{z-index:0}
+.modal-inner{position:relative;z-index:1}
+@media(max-width:540px){.modal{padding:44px 22px 36px}}
 
 .m-close{
-  position:absolute;top:20px;right:22px;
+  position:absolute;top:18px;right:20px;z-index:2;
   background:none;border:1px solid var(--border);cursor:pointer;
   width:32px;height:32px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  color:var(--mid);transition:var(--tr);font-size:14px;
-  font-family:'Outfit',sans-serif;
+  color:var(--mid);font-size:14px;transition:var(--tr);font-family:'Outfit',sans-serif;
 }
-.m-close:hover{border-color:var(--teal-d);color:var(--teal-d)}
+.m-close:hover{border-color:var(--teal);color:var(--teal)}
 
-/* progress */
 .m-dots{display:flex;gap:8px;justify-content:center;margin-bottom:40px}
-.m-dot{
-  width:8px;height:8px;border-radius:4px;
-  background:var(--cream-dd);transition:var(--tr);
-}
-.m-dot.active{width:24px;background:var(--teal)}
+.m-dot{width:9px;height:9px;border-radius:5px;background:#E0E0E0;transition:var(--tr)}
+.m-dot.active{width:26px;background:var(--teal)}
 .m-dot.done{background:var(--teal-l)}
 
-.m-slide{display:none;animation:fadeSl .35s ease}
+.m-slide{display:none;animation:fadeSl .3s ease}
 .m-slide.on{display:block}
+.m-slide h2{font-size:1.55rem;color:#333;margin-bottom:10px;text-align:center;letter-spacing:.4px}
+.m-sub{font-family:'Playfair Display',serif;font-weight:400;font-style:italic;font-size:.88rem;color:var(--mid);text-align:center;margin-bottom:14px}
+.m-rule{width:36px;height:3px;background:var(--teal);margin:18px auto;border-radius:2px}
+.m-slide>p{color:var(--mid);text-align:center;font-size:.95rem;line-height:1.8}
 
-.m-slide h2{
-  font-size:1.55rem;color:var(--dark);
-  margin-bottom:10px;text-align:center;
-  font-weight:700;letter-spacing:.4px;
-}
-.m-sub{
-  font-family:'Playfair Display',serif;font-weight:400;font-style:italic;
-  font-size:.85rem;color:var(--mid);text-align:center;
-  margin-bottom:16px;letter-spacing:.2px;
-}
-.m-slide>p{
-  color:var(--mid);text-align:center;
-  font-size:.95rem;line-height:1.75;
-}
-.m-rule{
-  width:40px;height:2px;background:var(--teal);
-  margin:20px auto;border-radius:1px;
-}
-
-/* checklist */
-.m-list{list-style:none;margin:22px 0;display:flex;flex-direction:column;gap:10px}
+.m-list{list-style:none;margin:20px 0;display:flex;flex-direction:column;gap:8px}
 .m-list li{
-  display:flex;align-items:center;gap:14px;
-  font-size:.92rem;color:var(--text);
-  padding:12px 16px;background:var(--white);
-  border-radius:var(--r8);border:1px solid var(--border);
-  transition:var(--tr);
+  display:flex;align-items:center;gap:12px;
+  font-size:.9rem;color:#333;padding:11px 16px;
+  background:#F9F9F9;border-radius:var(--r8);
+  border:1px solid var(--border);transition:var(--tr);
 }
-.m-list li:hover{border-color:var(--teal-l)}
-.m-check{
-  width:18px;height:18px;flex-shrink:0;border-radius:50%;
-  background:var(--teal-bg);border:1.5px solid var(--teal-l);
-  display:flex;align-items:center;justify-content:center;
-}
-.m-check svg{width:9px;height:9px;stroke:var(--teal-d);stroke-width:2.5;fill:none}
+.m-list li:hover{border-color:var(--teal-l);background:var(--teal-bg)}
+.m-chk{width:18px;height:18px;border-radius:50%;background:var(--teal);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.m-chk svg{width:9px;height:9px;stroke:#fff;fill:none;stroke-width:2.5}
+.m-info{background:#F9F9F9;border:1px solid var(--border);border-radius:var(--r16);padding:22px;margin:18px 0}
+.m-info p{font-size:.92rem;line-height:1.8;color:#444}
 
-.m-info{
-  background:var(--white);border:1px solid var(--border);
-  border-radius:var(--r16);padding:24px;margin:20px 0;
-}
-.m-info p{font-size:.92rem;line-height:1.8;color:var(--text)}
-
-.m-btns{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}
+.m-btns{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
 .m-btns.c{justify-content:center}
 
-/* ─── BUTTONS ─────────────────────────────────────────────── */
+/* ─── BUTTONS ── */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:13px 32px;border-radius:var(--r32);border:none;cursor:pointer;
+  padding:13px 30px;border-radius:var(--r48);border:none;cursor:pointer;
   font-family:'Outfit',sans-serif;font-weight:600;font-size:.82rem;
-  text-decoration:none;letter-spacing:1.2px;text-transform:uppercase;
-  transition:var(--tr);
+  text-decoration:none;letter-spacing:1.2px;text-transform:uppercase;transition:var(--tr);
 }
-.btn-teal{
-  background:var(--teal);color:#fff;
-  box-shadow:0 2px 14px rgba(91,124,153,.28);
-}
-.btn-teal:hover{background:var(--teal-d);color:#fff;transform:translateY(-1px);
-  box-shadow:0 4px 20px rgba(74,104,128,.36)}
-.btn-ghost{
-  background:transparent;color:var(--mid);
-  border:1px solid var(--border);
-}
-.btn-ghost:hover{border-color:var(--teal);color:var(--teal-d)}
-.btn-outline-dark{
-  background:transparent;color:var(--dark);
-  border:1.5px solid var(--dark);
-}
-.btn-outline-dark:hover{background:var(--dark);color:#fff}
+.btn-teal{background:var(--teal);color:#fff;box-shadow:0 3px 16px rgba(46,204,193,.35)}
+.btn-teal:hover{background:var(--teal-d);transform:translateY(-2px);box-shadow:0 6px 24px rgba(46,204,193,.42)}
+.btn-orange{background:var(--orange);color:#fff;box-shadow:0 3px 16px rgba(255,157,92,.35)}
+.btn-orange:hover{background:var(--orange-d);transform:translateY(-2px);box-shadow:0 6px 24px rgba(255,157,92,.42)}
+.btn-ghost{background:transparent;color:var(--mid);border:1.5px solid var(--border)}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
+.btn-outline{background:transparent;color:#333;border:1.5px solid #333}
+.btn-outline:hover{background:#333;color:#fff}
 .btn-full{width:100%}
-.btn-sm{padding:10px 20px;font-size:.72rem}
+.btn-sm{padding:10px 20px;font-size:.76rem}
 
-/* ─── HEADER ─────────────────────────────────────────────── */
+/* ─── HEADER ── */
 header{
   position:fixed;top:0;left:0;right:0;z-index:200;
   background:rgba(255,255,255,.97);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);transition:var(--tr);
+  border-bottom:1px solid var(--border);
 }
 .hdr{
-  max-width:1320px;margin:0 auto;padding:0 32px;
-  height:80px;
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;gap:16px;
+  max-width:1300px;margin:0 auto;padding:0 28px;height:80px;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;
 }
 .nav-l{display:flex;align-items:center;gap:2px}
 .nav-r{display:flex;align-items:center;gap:2px;justify-content:flex-end}
 .hdr-brand{text-align:center}
 .hdr-name{
-  display:block;
-  font-family:'Playfair Display',serif;font-weight:700;
-  font-size:1.05rem;color:var(--dark);
-  letter-spacing:.3px;white-space:nowrap;
-  text-decoration:none;
+  display:block;font-family:'Playfair Display',serif;font-weight:700;
+  font-size:1.05rem;color:#333;letter-spacing:.2px;white-space:nowrap;text-decoration:none;
 }
-.hdr-name:hover{color:var(--teal-d)}
-
+.hdr-name:hover{color:var(--teal)}
 nav a{
-  text-decoration:none;color:var(--mid);
-  font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:500;
-  padding:7px 12px;border-radius:var(--r8);transition:var(--tr);
-  white-space:nowrap;letter-spacing:.5px;text-transform:uppercase;
+  text-decoration:none;color:#555;font-family:'Outfit',sans-serif;
+  font-size:.75rem;font-weight:500;padding:7px 11px;border-radius:var(--r8);
+  transition:var(--tr);white-space:nowrap;letter-spacing:.5px;text-transform:uppercase;
 }
 nav a:hover,nav a.on{color:var(--teal-d);background:var(--teal-bg)}
 
-.ham{
-  display:none;flex-direction:column;gap:5px;
-  cursor:pointer;background:none;border:none;padding:6px;
-}
-.ham span{width:22px;height:2px;background:var(--dark);border-radius:1px;transition:var(--tr)}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px}
+.ham span{width:22px;height:2px;background:#333;border-radius:1px;transition:var(--tr)}
 .ham.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
 .ham.open span:nth-child(2){opacity:0}
 .ham.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
@@ -225,261 +152,164 @@ nav a:hover,nav a.on{color:var(--teal-d);background:var(--teal-bg)}
 .mob{
   display:none;position:fixed;top:80px;left:0;right:0;z-index:199;
   background:#fff;border-bottom:1px solid var(--border);
-  padding:16px 20px 24px;flex-direction:column;gap:3px;
+  padding:14px 18px 22px;flex-direction:column;gap:3px;
 }
 .mob.open{display:flex}
 .mob a{
-  text-decoration:none;color:var(--text);padding:11px 16px;
-  border-radius:var(--r8);font-family:'Outfit',sans-serif;
-  font-size:.78rem;font-weight:500;transition:var(--tr);
-  letter-spacing:.5px;text-transform:uppercase;
+  text-decoration:none;color:#333;padding:10px 14px;border-radius:var(--r8);
+  font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:500;
+  transition:var(--tr);letter-spacing:.5px;text-transform:uppercase;
 }
-.mob a:hover{background:var(--teal-bg);color:var(--teal-d)}
+.mob a:hover{background:var(--teal-bg);color:var(--teal)}
 .mob .btn{margin-top:8px}
 
-/* ─── HERO ─────────────────────────────────────────────── */
-.hero{
-  min-height:100vh;padding-top:80px;
-  background:#fff;position:relative;overflow:hidden;
-  display:flex;align-items:center;
+/* ─── SECTION BASE ── */
+section{padding:100px 24px;position:relative}
+.wrap{max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.sec-label{
+  display:inline-block;font-family:'Outfit',sans-serif;font-weight:600;font-size:.74rem;
+  color:var(--teal-d);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;
 }
+.sec-label.or{color:var(--orange-d)}
+.sec-rule{width:36px;height:3px;border-radius:2px;margin:12px 0 20px;background:var(--teal)}
+.sec-rule.or{background:var(--orange)}
+.sec-rule.c{margin-left:auto;margin-right:auto}
+.sec-h{font-size:clamp(1.6rem,3vw,2.4rem);color:#333;margin-bottom:14px;letter-spacing:.4px}
+.sec-d{color:var(--mid);font-size:.97rem;max-width:560px;line-height:1.85}
+.sec-head{margin-bottom:56px}
+.sec-head.c{text-align:center}.sec-head.c .sec-d,.sec-head.c .sec-rule{margin-left:auto;margin-right:auto}
 
-/* decorative dots */
-.dots{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.dot-shape{position:absolute;border-radius:50%}
-/* large background blobs — muted palette */
-.db1{width:320px;height:320px;top:-80px;left:-80px;
-  background:radial-gradient(circle,rgba(91,124,153,.12),transparent 70%)}
-.db2{width:280px;height:280px;top:-60px;right:-60px;
-  background:radial-gradient(circle,rgba(168,85,85,.1),transparent 70%)}
-.db3{width:240px;height:240px;bottom:-40px;left:5%;
-  background:radial-gradient(circle,rgba(139,107,136,.1),transparent 70%)}
-.db4{width:200px;height:200px;bottom:-20px;right:8%;
-  background:radial-gradient(circle,rgba(160,149,107,.1),transparent 70%)}
-/* small solid dots */
-.ds1{width:12px;height:12px;background:var(--teal-l);opacity:.65;top:18%;left:4%}
-.ds2{width:8px;height:8px;background:var(--orange);opacity:.55;top:28%;left:8%}
-.ds3{width:10px;height:10px;background:var(--yellow);opacity:.65;top:14%;right:5%}
-.ds4{width:14px;height:14px;background:var(--purple);opacity:.5;top:32%;right:4%}
-.ds5{width:9px;height:9px;background:var(--teal);opacity:.45;bottom:25%;left:6%}
-.ds6{width:11px;height:11px;background:var(--orange-l);opacity:.6;bottom:20%;right:6%}
-.ds7{width:7px;height:7px;background:var(--green);opacity:.55;top:60%;left:2%}
-.ds8{width:7px;height:7px;background:var(--yellow-l);opacity:.5;top:55%;right:3%}
-/* outline dots */
-.do1{width:28px;height:28px;border:2px solid rgba(91,124,153,.35);top:10%;left:10%}
-.do2{width:20px;height:20px;border:2px solid rgba(168,85,85,.3);top:22%;right:9%}
-.do3{width:24px;height:24px;border:2px solid rgba(139,107,136,.28);bottom:28%;left:12%}
-.do4{width:18px;height:18px;border:2px solid rgba(160,149,107,.32);bottom:22%;right:11%}
-
+/* ─── HERO ── */
+.hero{min-height:100vh;padding-top:80px;background:#fff;display:flex;align-items:center}
 .hero-inner{
   max-width:900px;margin:0 auto;padding:80px 24px;
   position:relative;z-index:1;text-align:center;
 }
 .hero-eyebrow{
-  display:inline-block;
-  font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:500;
+  display:inline-block;font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:600;
   color:var(--teal-d);letter-spacing:1.5px;text-transform:uppercase;
-  background:var(--teal-bg);border:1px solid var(--teal-xl);
-  padding:6px 18px;border-radius:var(--r32);margin-bottom:28px;
+  background:var(--teal-bg);border:1px solid var(--teal-l);
+  padding:6px 20px;border-radius:var(--r48);margin-bottom:28px;
 }
 .hero-brand{
   font-family:'Playfair Display',serif;font-weight:900;
-  font-size:clamp(2.6rem,6.5vw,4.8rem);color:var(--dark);
+  font-size:clamp(2.8rem,7vw,5.2rem);color:#333;
   letter-spacing:1px;margin-bottom:18px;line-height:1.05;
 }
 .hero-tagline{
   font-family:'Playfair Display',serif;font-weight:400;font-style:italic;
-  font-size:clamp(1rem,2.2vw,1.3rem);color:var(--mid);
+  font-size:clamp(1rem,2.3vw,1.3rem);color:var(--mid);
   margin-bottom:40px;line-height:1.65;
 }
-.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:60px}
 .hero-ph{
-  background:linear-gradient(135deg,var(--teal-xl),var(--purple-l));
-  border-radius:var(--r24);max-width:680px;margin:0 auto;
+  background:linear-gradient(135deg,var(--teal),var(--orange));
+  border-radius:var(--r24);max-width:700px;margin:0 auto;
   aspect-ratio:16/7;display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  border:1px solid rgba(255,255,255,.6);
-  box-shadow:var(--sh2);
+  box-shadow:var(--sh3);
 }
-.ph-label{
-  font-family:'Outfit',sans-serif;font-weight:400;font-size:.82rem;
-  color:rgba(44,44,44,.55);letter-spacing:.3px;
-}
+.ph-label{font-family:'Outfit',sans-serif;font-weight:500;font-size:.85rem;
+  color:rgba(255,255,255,.88);letter-spacing:.3px}
 
-/* ─── SECTION COMMON ─────────────────────────────────────── */
-section{padding:100px 24px}
-.wrap{max-width:1200px;margin:0 auto}
-.wrap-sm{max-width:840px;margin:0 auto}
-
-.sec-label{
-  display:inline-block;
-  font-family:'Outfit',sans-serif;font-weight:500;font-size:.74rem;
-  color:var(--teal-d);letter-spacing:1.4px;text-transform:uppercase;
-  margin-bottom:14px;
-}
-.sec-label.or{color:var(--orange)}
-.sec-label.pu{color:var(--purple)}
-.sec-rule{width:36px;height:2px;background:var(--teal);border-radius:1px;margin:14px 0 22px}
-.sec-rule.or{background:var(--orange)}
-.sec-rule.c{margin-left:auto;margin-right:auto}
-.sec-h{
-  font-size:clamp(1.6rem,3vw,2.4rem);color:var(--dark);
-  margin-bottom:14px;letter-spacing:.5px;
-}
-.sec-d{color:var(--mid);font-size:.97rem;max-width:560px;line-height:1.85}
-.sec-head{margin-bottom:60px}
-.sec-head.c{text-align:center}.sec-head.c .sec-d,.sec-head.c .sec-rule{margin-left:auto;margin-right:auto}
-
-/* ─── DESPRE NOI ─────────────────────────────────────────── */
-#despre{background:#fff}
-.despre-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+/* ─── IMG PLACEHOLDER ── */
 .img-ph{
   border-radius:var(--r32);aspect-ratio:4/3;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  box-shadow:var(--sh1);border:1px solid rgba(255,255,255,.8);
+  box-shadow:var(--sh2);
 }
-.img-ph.t{background:linear-gradient(135deg,var(--teal-xl),#dde8f0)}
-.img-ph.o{background:linear-gradient(135deg,var(--orange-l),#dfc8c8)}
-.img-ph.y{background:linear-gradient(135deg,var(--yellow-l),#dcd7c8)}
-.img-ph.p{background:linear-gradient(135deg,var(--purple-l),#ddd4dc)}
-.ph-wrap{text-align:center}
-.ph-ico{
-  width:40px;height:40px;border-radius:50%;
-  background:rgba(255,255,255,.35);
-  display:flex;align-items:center;justify-content:center;
-  margin:0 auto 10px;
-}
-.ph-ico svg{stroke:rgba(44,44,44,.45);fill:none;stroke-width:1.5}
-.ph-lbl{font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:400;
-  color:rgba(44,44,44,.5);letter-spacing:.2px}
+.img-ph.t{background:linear-gradient(135deg,var(--teal),var(--blue))}
+.img-ph.o{background:linear-gradient(135deg,var(--orange),var(--red))}
+.img-ph.y{background:linear-gradient(135deg,var(--yellow),var(--green))}
+.img-ph.p{background:linear-gradient(135deg,var(--pink),var(--blue))}
+.ph-ico{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.ph-ico svg{stroke:rgba(255,255,255,.85);fill:none;stroke-width:1.5}
+.ph-lbl{font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:400;color:rgba(255,255,255,.8)}
 
-.feat-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin:24px 0}
-.feat-list li{
-  display:flex;align-items:flex-start;gap:12px;
-  font-size:.93rem;color:var(--text);line-height:1.6;
-}
-.feat-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--teal);flex-shrink:0;margin-top:7px;
-}
+/* ─── DESPRE NOI ── */
+#despre{background:#fff}
+.despre-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.feat-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin:22px 0}
+.feat-list li{display:flex;align-items:flex-start;gap:12px;font-size:.93rem;color:#444;line-height:1.65}
+.feat-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:7px}
 
-/* ─── VIZIUNE & MISIUNE ─────────────────────────────────── */
-#viziune{background:var(--cream-d)}
-.viz-g{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.viz-card{
-  padding:40px;border-radius:var(--r32);
-  border:1px solid var(--border);background:#fff;
-  transition:var(--tr);
-}
-.viz-card:hover{transform:translateY(-3px);box-shadow:var(--sh2)}
-.viz-card h3{font-size:1.15rem;margin-bottom:12px;color:var(--dark)}
-.viz-card p{color:var(--mid);font-size:.93rem;line-height:1.8;margin-bottom:10px}
-.viz-accent{
-  display:inline-block;width:28px;height:3px;
-  border-radius:2px;margin-bottom:18px;
-}
-.viz-accent.t{background:var(--teal)}
-.viz-accent.o{background:var(--orange)}
+/* ─── VIZIUNE ── */
+#viziune{background:#F9F9F9}
+.viz-g{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.viz-card{padding:40px;border-radius:var(--r32);background:#fff;border:1px solid var(--border);transition:var(--tr)}
+.viz-card:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
+.viz-accent{display:inline-block;width:28px;height:3px;border-radius:2px;margin-bottom:18px}
+.viz-accent.t{background:var(--teal)}.viz-accent.o{background:var(--orange)}
+.viz-card h3{font-size:1.18rem;margin-bottom:12px}
+.viz-card p{color:var(--mid);font-size:.93rem;line-height:1.82;margin-bottom:10px}
 
-/* ─── SERVICII ─────────────────────────────────────────── */
-#servicii{background:var(--cream-d)}
+/* ─── SERVICII ── */
+#servicii{background:#fff}
 .srv-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
 .srv-card{
   background:#fff;border-radius:var(--r24);padding:32px;
-  border:1px solid var(--border);transition:var(--tr);
+  border:1px solid var(--border);transition:var(--tr);position:relative;overflow:hidden;
 }
-.srv-card:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
-.srv-ico-wrap{
-  width:48px;height:48px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:18px;
-}
-.srv-card h3{font-size:.97rem;margin-bottom:8px;color:var(--dark)}
-.srv-card p{color:var(--mid);font-size:.87rem;line-height:1.7}
-/* card accent colors — muted palette */
+.srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--r24) var(--r24) 0 0}
+.srv-card:hover{transform:translateY(-5px);box-shadow:var(--sh2)}
+.sc1::before{background:var(--teal)}.sc2::before{background:var(--orange)}
+.sc3::before{background:var(--yellow)}.sc4::before{background:var(--pink)}
+.sc5::before{background:var(--green)}.sc6::before{background:var(--blue)}
+.srv-ico-wrap{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
 .sc1 .srv-ico-wrap{background:var(--teal-bg)}.sc1 .srv-ico-wrap svg{stroke:var(--teal-d)}
-.sc2 .srv-ico-wrap{background:var(--orange-bg)}.sc2 .srv-ico-wrap svg{stroke:var(--orange)}
-.sc3 .srv-ico-wrap{background:var(--yellow-bg)}.sc3 .srv-ico-wrap svg{stroke:var(--yellow)}
-.sc4 .srv-ico-wrap{background:var(--purple-bg)}.sc4 .srv-ico-wrap svg{stroke:var(--purple)}
-.sc5 .srv-ico-wrap{background:var(--green-bg)}.sc5 .srv-ico-wrap svg{stroke:var(--green)}
-.sc6 .srv-ico-wrap{background:var(--teal-bg)}.sc6 .srv-ico-wrap svg{stroke:var(--teal-d)}
-.srv-card .card-line{
-  width:24px;height:2px;border-radius:1px;margin-bottom:16px;
-}
-.sc1 .card-line{background:var(--teal)}
-.sc2 .card-line{background:var(--orange)}
-.sc3 .card-line{background:var(--yellow)}
-.sc4 .card-line{background:var(--purple)}
-.sc5 .card-line{background:var(--green)}
-.sc6 .card-line{background:var(--teal-l)}
+.sc2 .srv-ico-wrap{background:#FFF3EC}.sc2 .srv-ico-wrap svg{stroke:var(--orange-d)}
+.sc3 .srv-ico-wrap{background:#FFFBE8}.sc3 .srv-ico-wrap svg{stroke:#B8960A}
+.sc4 .srv-ico-wrap{background:#FFF0F6}.sc4 .srv-ico-wrap svg{stroke:#D0408A}
+.sc5 .srv-ico-wrap{background:#F2FAF0}.sc5 .srv-ico-wrap svg{stroke:#3A8A10}
+.sc6 .srv-ico-wrap{background:#EEF4FF}.sc6 .srv-ico-wrap svg{stroke:#2060C8}
+.srv-card h3{font-size:1rem;margin-bottom:8px;color:#333}
+.srv-card p{color:var(--mid);font-size:.88rem;line-height:1.7}
 
-/* ─── GRUPELE ─────────────────────────────────────────── */
-#grupe{background:#fff}
+/* ─── GRUPELE ── */
+#grupe{background:#F9F9F9}
 .grp-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
-.grp-card{
-  border-radius:var(--r24);padding:36px 28px;text-align:center;
-  border:1px solid;transition:var(--tr);
-}
-.grp-card:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
-.grp-card.g1{background:var(--teal-bg);border-color:var(--teal-xl)}
-.grp-card.g2{background:var(--orange-bg);border-color:var(--orange-l)}
-.grp-card.g3{background:var(--yellow-bg);border-color:var(--yellow-l)}
-.grp-card.g4{background:var(--purple-bg);border-color:var(--purple-l)}
-.age-pill{
-  display:inline-block;padding:4px 14px;border-radius:var(--r32);
-  font-family:'Outfit',sans-serif;font-weight:600;font-size:.76rem;
-  margin-bottom:14px;
-}
-.g1 .age-pill{background:var(--teal);color:#fff}
-.g2 .age-pill{background:var(--orange);color:#fff}
-.g3 .age-pill{background:var(--yellow);color:#fff}
-.g4 .age-pill{background:var(--purple);color:#fff}
-.grp-card h3{font-size:1.1rem;margin-bottom:8px;color:var(--dark)}
+.grp-card{border-radius:var(--r24);padding:36px 28px;text-align:center;border:2px solid;transition:var(--tr);background:#fff}
+.grp-card:hover{transform:translateY(-5px);box-shadow:var(--sh2)}
+.grp-card.g1{border-color:var(--teal-l)}.grp-card.g2{border-color:#FFD0B0}
+.grp-card.g3{border-color:#FFE8A8}.grp-card.g4{border-color:#F0B8D8}
+.age-pill{display:inline-block;padding:5px 16px;border-radius:var(--r48);font-family:'Outfit',sans-serif;font-weight:700;font-size:.76rem;margin-bottom:14px;color:#fff}
+.g1 .age-pill{background:var(--teal)}.g2 .age-pill{background:var(--orange)}
+.g3 .age-pill{background:#C8A000}.g4 .age-pill{background:var(--pink)}
+.grp-card h3{font-size:1.12rem;margin-bottom:8px;color:#333}
 .grp-card p{font-size:.85rem;color:var(--mid);line-height:1.65;margin-bottom:14px}
-.grp-status{
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:.75rem;font-weight:600;font-family:'Outfit',sans-serif;color:var(--mid);
-}
-.s-dot{
-  width:7px;height:7px;border-radius:50%;animation:blink 2.5s infinite;
-}
-.s-open .s-dot{background:#6BAA7A}
-.s-open{color:#4A8060}
-.s-lim .s-dot{background:var(--yellow)}
-.s-lim{color:#9A6040}
+.grp-status{display:inline-flex;align-items:center;gap:6px;font-size:.76rem;font-weight:600;font-family:'Outfit',sans-serif}
+.s-dot{width:7px;height:7px;border-radius:50%;animation:blink 2.5s infinite}
+.s-open{color:#3A8A50}.s-open .s-dot{background:#52C41A}
+.s-lim{color:#A06020}.s-lim .s-dot{background:var(--orange)}
 
-/* ─── CABINET ─────────────────────────────────────────── */
-#cabinet{background:var(--teal-bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+/* ─── CABINET ── */
+#cabinet{background:var(--teal-bg)}
 .cab-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.cab-feats{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+.cab-feats{display:flex;flex-direction:column;gap:12px;margin-top:22px}
 .cab-feat{
   display:flex;align-items:flex-start;gap:16px;
-  padding:20px;background:rgba(255,255,255,.75);
-  border:1px solid rgba(91,124,153,.18);
-  border-radius:var(--r16);transition:var(--tr);
+  padding:18px 20px;background:#fff;
+  border:1px solid rgba(46,204,193,.2);border-radius:var(--r16);transition:var(--tr);
 }
-.cab-feat:hover{background:#fff;border-color:var(--teal-l)}
+.cab-feat:hover{box-shadow:var(--sh1);border-color:var(--teal-l)}
 .cab-feat-ico{
   width:40px;height:40px;border-radius:12px;flex-shrink:0;
-  background:rgba(91,124,153,.12);
-  display:flex;align-items:center;justify-content:center;
+  background:var(--teal-bg);display:flex;align-items:center;justify-content:center;
 }
 .cab-feat-ico svg{stroke:var(--teal-d);fill:none;stroke-width:1.5}
-.cab-feat h4{font-size:.9rem;color:var(--dark);margin-bottom:4px}
+.cab-feat h4{font-size:.9rem;color:#333;margin-bottom:3px;font-family:'Outfit',sans-serif;font-weight:600}
 .cab-feat p{font-size:.83rem;color:var(--mid);line-height:1.55}
 
-/* ─── MAP ─────────────────────────────────────────────── */
+/* ─── MAP ── */
 .map-ph{
-  height:360px;
-  background:linear-gradient(135deg,var(--teal-bg),var(--teal-xl));
+  height:360px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--teal-bg),#D4F2F0);
   display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;
 }
 .map-card{
-  background:#fff;border-radius:var(--r24);
-  padding:24px 32px;box-shadow:var(--sh2);
-  display:flex;align-items:center;gap:18px;
-  border:1px solid var(--border);max-width:400px;
+  background:#fff;border-radius:var(--r24);padding:24px 32px;
+  box-shadow:var(--sh2);display:flex;align-items:center;gap:18px;
+  border:1px solid var(--border);max-width:400px;position:relative;z-index:1;
 }
 .map-ico{
   width:44px;height:44px;border-radius:50%;flex-shrink:0;
@@ -487,75 +317,58 @@ section{padding:100px 24px}
   display:flex;align-items:center;justify-content:center;
 }
 .map-ico svg{stroke:var(--teal-d);fill:none;stroke-width:1.5}
-.map-card h4{font-size:.95rem;color:var(--dark);margin-bottom:4px}
+.map-card h4{font-size:.95rem;color:#333;margin-bottom:4px;font-family:'Playfair Display',serif}
 .map-card p{font-size:.83rem;color:var(--mid);line-height:1.5}
 .map-note{
   position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
-  font-size:.72rem;color:rgba(44,44,44,.4);
-  background:rgba(255,255,255,.7);padding:5px 14px;
-  border-radius:var(--r32);white-space:nowrap;border:1px solid var(--border);
+  font-size:.72rem;color:rgba(0,0,0,.45);
+  background:rgba(255,255,255,.85);padding:5px 14px;
+  border-radius:var(--r48);white-space:nowrap;border:1px solid var(--border);
 }
 
-/* ─── CONTACT ─────────────────────────────────────────── */
-#contact{background:var(--cream-d)}
-.con-g{display:grid;grid-template-columns:1fr 1.2fr;gap:64px}
-.con-info{background:#fff;border-radius:var(--r32);
-  padding:40px;border:1px solid var(--border)}
-.con-item{
-  display:flex;align-items:flex-start;gap:16px;
-  padding:18px 0;border-bottom:1px solid var(--border);
-}
+/* ─── CONTACT ── */
+#contact{background:#F9F9F9}
+.con-g{display:grid;grid-template-columns:1fr 1.2fr;gap:60px}
+.con-info{background:#fff;border-radius:var(--r32);padding:40px;border:1px solid var(--border)}
+.con-item{display:flex;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid var(--border)}
 .con-item:last-of-type{border:none}
 .con-ico{
   width:42px;height:42px;border-radius:12px;flex-shrink:0;
-  background:var(--teal-bg);border:1px solid var(--teal-xl);
+  background:var(--teal-bg);border:1px solid var(--teal-l);
   display:flex;align-items:center;justify-content:center;
 }
 .con-ico svg{stroke:var(--teal-d);fill:none;stroke-width:1.5}
-.con-item h4{
-  font-size:.72rem;text-transform:uppercase;letter-spacing:.8px;
-  color:var(--mid);font-family:'Outfit',sans-serif;font-weight:600;margin-bottom:4px;
-}
-.con-item p,.con-item a{
-  font-size:.92rem;color:var(--text);font-weight:400;text-decoration:none;
-}
-.con-item a:hover{color:var(--teal-d)}
+.con-item h4{font-size:.72rem;text-transform:uppercase;letter-spacing:.8px;color:var(--mid);font-family:'Outfit',sans-serif;font-weight:600;margin-bottom:4px}
+.con-item p,.con-item a{font-size:.92rem;color:#333;font-weight:400;text-decoration:none}
+.con-item a:hover{color:var(--teal)}
 .open-tag{
   display:inline-flex;align-items:center;gap:8px;margin-top:20px;
-  background:rgba(107,170,122,.1);border:1px solid rgba(107,170,122,.3);
-  border-radius:var(--r32);padding:7px 16px;
+  background:rgba(82,196,26,.1);border:1px solid rgba(82,196,26,.3);
+  border-radius:var(--r48);padding:7px 16px;
 }
-.open-tag .s-dot{background:#6BAA7A;animation:blink 2.5s infinite}
-.open-tag span{font-family:'Outfit',sans-serif;font-weight:600;font-size:.78rem;color:#3A7050}
+.open-tag .s-dot{background:var(--green);animation:blink 2.5s infinite}
+.open-tag span{font-family:'Outfit',sans-serif;font-weight:600;font-size:.78rem;color:#3A8A50}
 
-/* form */
-.con-form{
-  background:#fff;border-radius:var(--r32);
-  padding:40px;border:1px solid var(--border);
-}
-.con-form h3{font-size:1.2rem;margin-bottom:6px;color:var(--dark)}
-.f-sub{color:var(--mid);font-size:.87rem;margin-bottom:26px}
+.con-form{background:#fff;border-radius:var(--r32);padding:40px;border:1px solid var(--border)}
+.con-form h3{font-size:1.2rem;margin-bottom:6px}
+.f-sub{color:var(--mid);font-size:.87rem;margin-bottom:24px}
 .f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .f-grp{margin-bottom:14px}
-.f-grp label{
-  display:block;font-family:'Outfit',sans-serif;font-weight:500;
-  font-size:.8rem;color:var(--dark);margin-bottom:7px;
-}
+.f-grp label{display:block;font-family:'Outfit',sans-serif;font-weight:500;font-size:.8rem;color:#333;margin-bottom:7px}
 .f-grp input,.f-grp select,.f-grp textarea{
-  width:100%;padding:12px 14px;
-  border:1.5px solid var(--border);border-radius:var(--r8);
-  font-family:'Outfit',sans-serif;font-size:.9rem;color:var(--dark);
-  background:var(--cream-d);outline:none;transition:var(--tr);
+  width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--r8);
+  font-family:'Outfit',sans-serif;font-size:.9rem;color:#333;
+  background:#F9F9F9;outline:none;transition:var(--tr);
 }
 .f-grp input:focus,.f-grp select:focus,.f-grp textarea:focus{
   border-color:var(--teal);background:#fff;
-  box-shadow:0 0 0 3px rgba(91,124,153,.12);
+  box-shadow:0 0 0 3px rgba(46,204,193,.12);
 }
 .f-grp textarea{resize:vertical;min-height:90px}
-.f-grp input.err,.f-grp textarea.err{border-color:#D08080}
-.err-t{font-size:.76rem;color:#C06060;margin-top:4px;display:none}
+.f-grp input.err,.f-grp textarea.err{border-color:var(--red)}
+.err-t{font-size:.76rem;color:var(--red);margin-top:4px;display:none}
 .err-t.show{display:block}
-.form-ok{display:none;text-align:center;padding:24px}
+.form-ok{display:none;text-align:center;padding:20px}
 .form-ok.show{display:block;animation:fadeIn .4s ease}
 .ok-ico{
   width:56px;height:56px;border-radius:50%;margin:0 auto 16px;
@@ -564,76 +377,53 @@ section{padding:100px 24px}
 }
 .ok-ico svg{stroke:var(--teal-d);fill:none;stroke-width:2}
 
-/* ─── FOOTER ─────────────────────────────────────────────── */
-footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
+/* ─── FOOTER ── */
+footer{background:#222;color:#fff;padding:64px 24px 0}
 .ft-wrap{max-width:1200px;margin:0 auto}
-.ft-g{
-  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;
-  padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.08);
-}
-.ft-brand .brand-tag{
-  font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;
-  color:#fff;margin-bottom:10px;display:block;letter-spacing:.3px;
-}
+.ft-g{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.08)}
+.ft-brand .brand-tag{font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;color:#fff;margin-bottom:10px;display:block;letter-spacing:.2px}
 .ft-brand p{font-size:.86rem;color:rgba(255,255,255,.45);line-height:1.75;margin-bottom:22px}
 .socs{display:flex;gap:8px}
-.soc{
-  width:36px;height:36px;border-radius:10px;
-  background:rgba(255,255,255,.08);
-  display:flex;align-items:center;justify-content:center;
-  transition:var(--tr);text-decoration:none;
-}
+.soc{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;transition:var(--tr);text-decoration:none}
 .soc:hover{background:var(--teal)}
 .soc svg{stroke:rgba(255,255,255,.6);fill:none;stroke-width:1.5}
 .soc:hover svg{stroke:#fff}
-.ft-col h4{
-  font-family:'Outfit',sans-serif;font-weight:600;font-size:.78rem;
-  text-transform:uppercase;letter-spacing:.8px;
-  margin-bottom:18px;color:rgba(255,255,255,.7);
-}
+.ft-col h4{font-family:'Outfit',sans-serif;font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.8px;margin-bottom:18px;color:rgba(255,255,255,.65)}
 .ft-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
-.ft-col ul li a{
-  color:rgba(255,255,255,.4);text-decoration:none;
-  font-size:.86rem;transition:var(--tr);
-}
+.ft-col ul li a{color:rgba(255,255,255,.4);text-decoration:none;font-size:.86rem;transition:var(--tr)}
 .ft-col ul li a:hover{color:var(--teal-l)}
-.ft-bot{
-  padding:22px 0;display:flex;align-items:center;
-  justify-content:space-between;gap:16px;flex-wrap:wrap;
-}
+.ft-bot{padding:22px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .ft-bot p{font-size:.8rem;color:rgba(255,255,255,.3)}
 
-/* ─── BACK TO TOP ─────────────────────────────────────────── */
+/* ─── BACK TO TOP ── */
 .btt{
   position:fixed;bottom:28px;right:28px;z-index:100;
-  width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border);
-  cursor:pointer;background:var(--white);color:var(--dark);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:var(--sh2);transition:var(--tr);
+  width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
+  background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(46,204,193,.4);transition:var(--tr);
   opacity:0;pointer-events:none;
 }
 .btt.show{opacity:1;pointer-events:auto}
-.btt:hover{background:var(--teal);border-color:var(--teal);color:#fff;transform:translateY(-2px)}
-.btt svg{stroke:currentColor;fill:none;stroke-width:2}
+.btt:hover{background:var(--teal-d);transform:translateY(-3px)}
+.btt svg{stroke:#fff;fill:none;stroke-width:2.5}
 
-/* ─── SCROLL REVEAL ─────────────────────────────────────── */
-.rev{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+/* ─── SCROLL REVEAL ── */
+.rev{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
 .rev.vis{opacity:1;transform:none}
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
 
-/* ─── KEYFRAMES ─────────────────────────────────────────── */
+/* ─── KEYFRAMES ── */
 @keyframes fadeIn{to{opacity:1}}
 @keyframes slideDown{to{opacity:1;transform:none}}
 @keyframes fadeSl{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:none}}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* ─── RESPONSIVE ─────────────────────────────────────────── */
+/* ─── RESPONSIVE ── */
 @media(max-width:1020px){
-  .hdr{grid-template-columns:auto 1fr auto}
   .nav-l,.nav-r{display:none}
-  .hdr-brand{text-align:left}
-  .hdr{grid-template-columns:1fr auto auto}
   .ham{display:flex}
+  .hdr{grid-template-columns:auto 1fr auto}
+  .hdr-brand{text-align:left}
   .despre-g,.cab-g,.con-g{grid-template-columns:1fr;gap:40px}
   .viz-g{grid-template-columns:1fr}
   .ft-g{grid-template-columns:1fr 1fr}
@@ -645,72 +435,80 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
   .m-slide h2{font-size:1.25rem}
   .ft-g{grid-template-columns:1fr;gap:28px}
   .con-form,.con-info{padding:24px 18px}
-  .hdr{padding:0 20px}
+  .hdr{padding:0 18px}
 }
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════════
-     MODAL (3 slide-uri)
-════════════════════════════════════════════════ -->
-<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="m-title">
+<!-- ══════════════════════════════════════
+     MODAL
+══════════════════════════════════════ -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="m-h">
   <div class="modal">
+    <!-- modal bubbles — asymmetric -->
+    <div class="bbl" aria-hidden="true">
+      <span class="b r" style="width:90px;height:90px;top:-30px;left:-30px;opacity:.85"></span>
+      <span class="b bl" style="width:55px;height:55px;top:20px;right:-18px;opacity:.8"></span>
+      <span class="b y" style="width:40px;height:40px;bottom:60px;left:-12px;opacity:.75"></span>
+      <span class="b g" style="width:30px;height:30px;bottom:-10px;right:60px;opacity:.8"></span>
+      <span class="b pk" style="width:22px;height:22px;bottom:30px;right:20px;opacity:.7"></span>
+    </div>
     <button class="m-close" id="mClose" aria-label="Închide">&#x2715;</button>
-    <div class="m-dots" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1">
-      <div class="m-dot active" id="md1"></div>
-      <div class="m-dot" id="md2"></div>
-      <div class="m-dot" id="md3"></div>
-    </div>
-
-    <!-- Slide 1 -->
-    <div class="m-slide on" id="ms1">
-      <h2 id="m-title">Bun venit la Grădinița Boroboață</h2>
-      <p class="m-sub">Website Demo &mdash; Versiune de Prezentare</p>
-      <div class="m-rule"></div>
-      <p>O platformă digitală dedicată prezentării serviciilor și valorilor Grădiniței.</p>
-      <div class="m-btns c">
-        <button class="btn btn-teal" onclick="nextS()">Continuă</button>
+    <div class="modal-inner">
+      <div class="m-dots" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1">
+        <div class="m-dot active" id="md1"></div>
+        <div class="m-dot" id="md2"></div>
+        <div class="m-dot" id="md3"></div>
       </div>
-    </div>
 
-    <!-- Slide 2 -->
-    <div class="m-slide" id="ms2">
-      <h2>Descoperă pe site</h2>
-      <div class="m-rule c"></div>
-      <ul class="m-list">
-        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Povestea Grădiniței</li>
-        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Viziunea și Misiunea</li>
-        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Servicii oferite</li>
-        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Informații despre grupele de vârstă</li>
-        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Cabinet Psihopedagogic</li>
-        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Detalii contact și locație</li>
-        <li><span class="m-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Galerie (placeholder)</li>
-      </ul>
-      <div class="m-btns">
-        <button class="btn btn-ghost" onclick="prevS()">&larr; Înapoi</button>
-        <button class="btn btn-teal" onclick="nextS()" style="flex:1">Următor</button>
+      <!-- Slide 1 -->
+      <div class="m-slide on" id="ms1">
+        <h2 id="m-h">Bun venit la Grădinița Boroboață</h2>
+        <p class="m-sub">Website Demo &mdash; Versiune de Prezentare</p>
+        <div class="m-rule"></div>
+        <p>O platformă digitală dedicată prezentării serviciilor și valorilor Grădiniței.</p>
+        <div class="m-btns c"><button class="btn btn-teal" onclick="nextS()">Continuă</button></div>
       </div>
-    </div>
 
-    <!-- Slide 3 -->
-    <div class="m-slide" id="ms3">
-      <h2>Informație</h2>
-      <div class="m-rule c"></div>
-      <div class="m-info">
-        <p>Acest website este în fază de prezentare. Orice element, conținut sau design poate fi personalizat conform preferințelor dumneavoastră.</p>
+      <!-- Slide 2 -->
+      <div class="m-slide" id="ms2">
+        <h2>Descoperă pe site</h2>
+        <div class="m-rule"></div>
+        <ul class="m-list">
+          <li><span class="m-chk"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Povestea Grădiniței</li>
+          <li><span class="m-chk"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Viziunea și Misiunea</li>
+          <li><span class="m-chk"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Servicii oferite</li>
+          <li><span class="m-chk"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Informații despre grupele de vârstă</li>
+          <li><span class="m-chk"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Cabinet Psihopedagogic</li>
+          <li><span class="m-chk"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Detalii contact și locație</li>
+          <li><span class="m-chk"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Galerie (placeholder)</li>
+        </ul>
+        <div class="m-btns">
+          <button class="btn btn-ghost" onclick="prevS()">&larr; Înapoi</button>
+          <button class="btn btn-teal" onclick="nextS()" style="flex:1">Următor</button>
+        </div>
       </div>
-      <div class="m-btns">
-        <button class="btn btn-ghost" onclick="prevS()">&larr; Înapoi</button>
-        <button class="btn btn-teal" onclick="closeM()" style="flex:1">Vezi Website-ul</button>
+
+      <!-- Slide 3 -->
+      <div class="m-slide" id="ms3">
+        <h2>Informație</h2>
+        <div class="m-rule"></div>
+        <div class="m-info">
+          <p>Acest website este în fază de prezentare. Orice element, conținut sau design poate fi personalizat conform preferințelor dumneavoastră.</p>
+        </div>
+        <div class="m-btns">
+          <button class="btn btn-ghost" onclick="prevS()">&larr; Înapoi</button>
+          <button class="btn btn-teal" onclick="closeM()" style="flex:1">Vezi Website-ul</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════
+<!-- ══════════════════════════════════════
      HEADER
-════════════════════════════════════════════════ -->
+══════════════════════════════════════ -->
 <header id="hdr">
   <div class="hdr">
     <nav class="nav-l" aria-label="Navigare stânga">
@@ -718,20 +516,17 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
       <a href="#despre">Despre Noi</a>
       <a href="#servicii">Servicii</a>
     </nav>
-
     <div class="hdr-brand">
       <a href="#home" class="hdr-name">Grădinița Boroboață</a>
     </div>
-
     <div class="nav-r">
       <nav aria-label="Navigare dreapta">
         <a href="#grupe">Grupele</a>
         <a href="#cabinet">Cabinet</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a href="#contact" class="btn btn-teal btn-sm" style="margin-left:12px">Program Vizită</a>
+      <a href="#contact" class="btn btn-teal btn-sm" style="margin-left:10px">Program Vizită</a>
     </div>
-
     <button class="ham" id="ham" aria-label="Meniu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -748,78 +543,61 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
   <a href="#contact" class="btn btn-teal btn-full" onclick="closeMob()">Program Vizită</a>
 </div>
 
-<!-- ════════════════════════════════════════════════
+<!-- ══════════════════════════════════════
      HERO
-════════════════════════════════════════════════ -->
+══════════════════════════════════════ -->
 <section id="home" class="hero" style="padding-top:80px">
-  <div class="dots" aria-hidden="true">
-    <div class="dot-shape db1"></div>
-    <div class="dot-shape db2"></div>
-    <div class="dot-shape db3"></div>
-    <div class="dot-shape db4"></div>
-    <div class="dot-shape ds1"></div>
-    <div class="dot-shape ds2"></div>
-    <div class="dot-shape ds3"></div>
-    <div class="dot-shape ds4"></div>
-    <div class="dot-shape ds5"></div>
-    <div class="dot-shape ds6"></div>
-    <div class="dot-shape ds7"></div>
-    <div class="dot-shape ds8"></div>
-    <div class="dot-shape do1"></div>
-    <div class="dot-shape do2"></div>
-    <div class="dot-shape do3"></div>
-    <div class="dot-shape do4"></div>
+  <div class="bbl" aria-hidden="true">
+    <!-- corners & edges — asymmetric spread -->
+    <span class="b r"  style="width:140px;height:140px;top:-50px;left:-50px;opacity:.9"></span>
+    <span class="b bl" style="width:100px;height:100px;top:-30px;right:5%;opacity:.85"></span>
+    <span class="b y"  style="width:70px;height:70px;top:12%;right:-20px;opacity:.88"></span>
+    <span class="b g"  style="width:55px;height:55px;top:35%;left:-18px;opacity:.85"></span>
+    <span class="b pk" style="width:90px;height:90px;bottom:-30px;left:8%;opacity:.88"></span>
+    <span class="b or" style="width:65px;height:65px;bottom:10%;right:-22px;opacity:.85"></span>
+    <span class="b t"  style="width:40px;height:40px;top:55%;right:6%;opacity:.8"></span>
+    <span class="b r"  style="width:28px;height:28px;top:20%;left:12%;opacity:.7"></span>
+    <span class="b bl" style="width:50px;height:50px;bottom:-18px;right:25%;opacity:.82"></span>
+    <span class="b y"  style="width:32px;height:32px;bottom:28%;left:4%;opacity:.75"></span>
+    <span class="b g"  style="width:22px;height:22px;top:8%;left:30%;opacity:.65"></span>
+    <span class="b pk" style="width:36px;height:36px;top:42%;right:2%;opacity:.72"></span>
   </div>
-
   <div class="hero-inner">
     <div class="hero-eyebrow rev">Continuă înscrierea &mdash; Grupa Baby &amp; Mică</div>
     <h1 class="hero-brand rev d1">Grădinița Boroboață</h1>
     <p class="hero-tagline rev d2">Fiecare copil merită un loc unde să se simtă apreciat</p>
     <div class="hero-ctas rev d3">
       <a href="#contact" class="btn btn-teal">Program Vizită</a>
-      <a href="#despre" class="btn btn-outline-dark">Află mai mult</a>
+      <a href="#despre" class="btn btn-orange">Află mai mult</a>
     </div>
     <div class="hero-ph rev d4" aria-hidden="true">
-      <div class="ph-wrap">
-        <div class="ph-ico">
-          <svg width="20" height="20" viewBox="0 0 24 24">
-            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
-            <polyline points="21,15 16,10 5,21"/>
-          </svg>
-        </div>
-        <p class="ph-label">Spațiu pentru fotografie principală</p>
-      </div>
+      <p class="ph-label">Spațiu pentru fotografie principală</p>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════
+<!-- ══════════════════════════════════════
      DESPRE NOI
-════════════════════════════════════════════════ -->
+══════════════════════════════════════ -->
 <section id="despre">
+  <div class="bbl" aria-hidden="true">
+    <span class="b bl" style="width:110px;height:110px;top:-40px;right:-30px;opacity:.82"></span>
+    <span class="b y"  style="width:60px;height:60px;bottom:-20px;left:-20px;opacity:.78"></span>
+    <span class="b pk" style="width:36px;height:36px;top:40%;left:-12px;opacity:.72"></span>
+    <span class="b g"  style="width:28px;height:28px;bottom:20%;right:-10px;opacity:.7"></span>
+  </div>
   <div class="wrap">
     <div class="despre-g">
       <div class="img-ph t rev" aria-hidden="true">
-        <div class="ph-wrap">
-          <div class="ph-ico">
-            <svg width="20" height="20" viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21,15 16,10 5,21"/>
-            </svg>
-          </div>
-          <p class="ph-lbl">Spațiu pentru fotografie</p>
-        </div>
+        <div class="ph-ico"><svg width="22" height="22" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg></div>
+        <p class="ph-lbl">Spațiu pentru fotografie</p>
       </div>
       <div class="rev d1">
         <span class="sec-label">Povestea noastră</span>
         <div class="sec-rule"></div>
         <h2 class="sec-h">Despre Grădinița Boroboață</h2>
-        <p style="color:var(--mid);line-height:1.85;margin-bottom:14px">
-          Grădinița Boroboață este un loc special unde copiii descoperă lumea cu curiozitate și bucurie. Oferim un mediu cald, sigur și stimulativ, în care fiecare copil este văzut, auzit și apreciat pentru unicitatea sa.
-        </p>
-        <p style="color:var(--mid);line-height:1.85">
-          Echipa noastră de educatoare dedicate și psihopedagog specializat lucrează împreună pentru a asigura o dezvoltare armonioasă — cognitivă, emoțională și socială.
-        </p>
+        <p style="color:var(--mid);line-height:1.85;margin-bottom:14px">Grădinița Boroboață este un loc special unde copiii descoperă lumea cu curiozitate și bucurie. Oferim un mediu cald, sigur și stimulativ, în care fiecare copil este văzut, auzit și apreciat.</p>
+        <p style="color:var(--mid);line-height:1.85">Echipa noastră de educatoare dedicate și psihopedagog specializat lucrează împreună pentru o dezvoltare armonioasă — cognitivă, emoțională și socială.</p>
         <ul class="feat-list">
           <li><span class="feat-dot"></span>Personal calificat și dedicat</li>
           <li><span class="feat-dot"></span>Program flexibil adaptat familiei</li>
@@ -833,10 +611,16 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════
+<!-- ══════════════════════════════════════
      VIZIUNE & MISIUNE
-════════════════════════════════════════════════ -->
+══════════════════════════════════════ -->
 <section id="viziune">
+  <div class="bbl" aria-hidden="true">
+    <span class="b r"  style="width:80px;height:80px;top:-28px;left:10%;opacity:.8"></span>
+    <span class="b t"  style="width:50px;height:50px;bottom:-16px;right:8%;opacity:.78"></span>
+    <span class="b y"  style="width:35px;height:35px;top:30%;right:-12px;opacity:.72"></span>
+    <span class="b pk" style="width:24px;height:24px;bottom:35%;left:-8px;opacity:.68"></span>
+  </div>
   <div class="wrap">
     <div class="sec-head c">
       <span class="sec-label">Valorile noastre</span>
@@ -848,23 +632,30 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
       <div class="viz-card rev d1">
         <span class="viz-accent t"></span>
         <h3>Viziunea noastră</h3>
-        <p>Ne dorim ca Grădinița Boroboață să fie un reper de excelență în educația timpurie din Iași — un loc unde copiii iubesc să vină în fiecare zi, unde se simt în siguranță și unde descoperă lumea cu entuziasm.</p>
+        <p>Ne dorim ca Grădinița Boroboață să fie un reper de excelență în educația timpurie din Iași — un loc unde copiii iubesc să vină în fiecare zi.</p>
         <p>Vizăm o comunitate familie-grădiniță care lucrează împreună pentru binele fiecărui copil.</p>
       </div>
       <div class="viz-card rev d2">
         <span class="viz-accent o"></span>
         <h3>Misiunea noastră</h3>
-        <p>Misiunea noastră este să oferim fiecărui copil un mediu educațional stimulativ, care îi respectă ritmul propriu de dezvoltare și îi cultivă dorința de a învăța.</p>
-        <p>Prin joc, explorare și conexiuni autentice, pregătim copiii pentru viitor cu încredere, empatie și curiozitate.</p>
+        <p>Misiunea noastră este să oferim fiecărui copil un mediu educațional stimulativ, care îi respectă ritmul propriu de dezvoltare.</p>
+        <p>Prin joc, explorare și conexiuni autentice, pregătim copiii pentru viitor cu încredere și curiozitate.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════
+<!-- ══════════════════════════════════════
      SERVICII
-════════════════════════════════════════════════ -->
+══════════════════════════════════════ -->
 <section id="servicii">
+  <div class="bbl" aria-hidden="true">
+    <span class="b or" style="width:100px;height:100px;top:-35px;right:-30px;opacity:.82"></span>
+    <span class="b g"  style="width:65px;height:65px;bottom:-22px;left:-20px;opacity:.78"></span>
+    <span class="b bl" style="width:42px;height:42px;top:45%;left:-14px;opacity:.72"></span>
+    <span class="b pk" style="width:30px;height:30px;bottom:25%;right:-10px;opacity:.7"></span>
+    <span class="b y"  style="width:22px;height:22px;top:18%;right:3%;opacity:.65"></span>
+  </div>
   <div class="wrap">
     <div class="sec-head c">
       <span class="sec-label or">Ce oferim</span>
@@ -876,11 +667,9 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
       <div class="srv-card sc1 rev d1">
         <div class="srv-ico-wrap">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
           </svg>
         </div>
-        <div class="card-line"></div>
         <h3>Educație timpurie</h3>
         <p>Program educațional structurat, adaptat vârstei, cu activități zilnice care stimulează gândirea creativă și logică.</p>
       </div>
@@ -890,53 +679,42 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
           </svg>
         </div>
-        <div class="card-line"></div>
         <h3>Îngrijire afectuoasă</h3>
         <p>Personal specializat care asigură un mediu cald, sigur și iubitor, în care fiecare copil se simte acasă.</p>
       </div>
       <div class="srv-card sc3 rev d3">
         <div class="srv-ico-wrap">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-            <line x1="9" y1="9" x2="9.01" y2="9"/>
-            <line x1="15" y1="9" x2="15.01" y2="9"/>
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
           </svg>
         </div>
-        <div class="card-line"></div>
         <h3>Activități creative</h3>
         <p>Ateliere de artă, muzică, dans și teatru care dezvoltă expresivitatea și creativitatea copilului.</p>
       </div>
       <div class="srv-card sc4 rev d1">
         <div class="srv-ico-wrap">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
-            <path d="M12 6v6l4 2"/>
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
           </svg>
         </div>
-        <div class="card-line"></div>
         <h3>Suport psihopedagogic</h3>
         <p>Cabinet psihopedagogic propriu cu specialist dedicat pentru evaluare, consiliere și sprijin individualizat.</p>
       </div>
       <div class="srv-card sc5 rev d2">
         <div class="srv-ico-wrap">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-            <path d="M17 8C8 10 5.9 16.17 3.82 21"/>
-            <path d="M9.08 9.01C9 10.6 8.42 12.1 7.5 13.5"/>
-            <path d="M17 8C17 8 18 13 11 16"/>
+            <path d="M17 8C8 10 5.9 16.17 3.82 21"/><path d="M9.08 9.01C9 10.6 8.42 12.1 7.5 13.5"/><path d="M17 8C17 8 18 13 11 16"/>
           </svg>
         </div>
-        <div class="card-line"></div>
         <h3>Activități în aer liber</h3>
         <p>Spații de joacă amenajate și activități outdoor care promovează mișcarea, natura și socializarea.</p>
       </div>
       <div class="srv-card sc6 rev d3">
         <div class="srv-ico-wrap">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-            <path d="M3 11l19-9-9 19-2-8-8-2z"/>
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
           </svg>
         </div>
-        <div class="card-line"></div>
         <h3>Masă și gustări sănătoase</h3>
         <p>Meniu zilnic echilibrat, preparat cu ingrediente proaspete, adaptat nevoilor nutriționale ale copiilor.</p>
       </div>
@@ -944,10 +722,17 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════
+<!-- ══════════════════════════════════════
      GRUPELE
-════════════════════════════════════════════════ -->
+══════════════════════════════════════ -->
 <section id="grupe">
+  <div class="bbl" aria-hidden="true">
+    <span class="b t"  style="width:90px;height:90px;top:-30px;left:-28px;opacity:.82"></span>
+    <span class="b pk" style="width:55px;height:55px;top:-18px;right:15%;opacity:.8"></span>
+    <span class="b or" style="width:40px;height:40px;bottom:-14px;right:-14px;opacity:.78"></span>
+    <span class="b r"  style="width:28px;height:28px;bottom:22%;left:-10px;opacity:.72"></span>
+    <span class="b y"  style="width:20px;height:20px;top:40%;right:2%;opacity:.68"></span>
+  </div>
   <div class="wrap">
     <div class="sec-head c">
       <span class="sec-label">Vârste &amp; Grupe</span>
@@ -959,123 +744,88 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
       <div class="grp-card g1 rev d1">
         <span class="age-pill">1 &ndash; 2 ani</span>
         <h3>Grupa Baby</h3>
-        <p>Îngrijire specializată și stimulare senzorială pentru cei mai mici. Un mediu cald și securizant în care bebelușul explorează primele experiențe.</p>
+        <p>Îngrijire specializată și stimulare senzorială pentru cei mai mici. Un mediu cald și securizant.</p>
         <div class="grp-status s-open"><span class="s-dot"></span>Locuri disponibile</div>
       </div>
       <div class="grp-card g2 rev d2">
         <span class="age-pill">2 &ndash; 3 ani</span>
         <h3>Grupa Mică</h3>
-        <p>Activități ludice care dezvoltă autonomia, limbajul și primele interacțiuni sociale. Tranziție blândă spre viața de grădiniță.</p>
+        <p>Activități ludice care dezvoltă autonomia, limbajul și primele interacțiuni sociale.</p>
         <div class="grp-status s-open"><span class="s-dot"></span>Locuri disponibile</div>
       </div>
       <div class="grp-card g3 rev d3">
         <span class="age-pill">3 &ndash; 4 ani</span>
         <h3>Grupa Mijlocie</h3>
-        <p>Joc structurat, activități creative și primele concepte matematice și de limbaj. Copilul înțelege lumea din jurul său.</p>
+        <p>Joc structurat, activități creative și primele concepte matematice și de limbaj.</p>
         <div class="grp-status s-lim"><span class="s-dot"></span>Locuri limitate</div>
       </div>
       <div class="grp-card g4 rev d4">
         <span class="age-pill">4 &ndash; 6 ani</span>
         <h3>Grupa Mare</h3>
-        <p>Pregătire pentru școală prin activități complexe și proiecte interdisciplinare. Dezvoltarea competențelor sociale și cognitive.</p>
+        <p>Pregătire pentru școală prin activități complexe și proiecte interdisciplinare.</p>
         <div class="grp-status s-lim"><span class="s-dot"></span>Locuri limitate</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════
-     CABINET PSIHOPEDAGOGIC
-════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════
+     CABINET
+══════════════════════════════════════ -->
 <section id="cabinet">
+  <div class="bbl" aria-hidden="true">
+    <span class="b bl" style="width:80px;height:80px;top:-26px;right:10%;opacity:.78"></span>
+    <span class="b y"  style="width:50px;height:50px;bottom:-16px;left:8%;opacity:.75"></span>
+    <span class="b r"  style="width:34px;height:34px;top:30%;left:-12px;opacity:.7"></span>
+    <span class="b pk" style="width:26px;height:26px;bottom:30%;right:-8px;opacity:.68"></span>
+  </div>
   <div class="wrap">
     <div class="cab-g">
       <div class="rev">
         <span class="sec-label">Suport specializat</span>
         <div class="sec-rule"></div>
         <h2 class="sec-h">Cabinet Psihopedagogic</h2>
-        <p style="color:var(--mid);font-size:.95rem;line-height:1.85;margin-bottom:0">
-          Un serviciu esențial care face diferența &mdash; fiecare copil beneficiază de atenție individualizată și suport profesionist.
-        </p>
+        <p style="color:var(--mid);font-size:.95rem;line-height:1.85;margin-bottom:0">Un serviciu esențial &mdash; fiecare copil beneficiază de atenție individualizată și suport profesionist.</p>
         <div class="cab-feats">
           <div class="cab-feat">
-            <div class="cab-feat-ico">
-              <svg width="18" height="18" viewBox="0 0 24 24">
-                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-              </svg>
-            </div>
-            <div>
-              <h4>Evaluare psihopedagogică</h4>
-              <p>Identificarea nevoilor individuale și elaborarea unui plan de intervenție personalizat.</p>
-            </div>
+            <div class="cab-feat-ico"><svg width="18" height="18" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            <div><h4>Evaluare psihopedagogică</h4><p>Identificarea nevoilor individuale și elaborarea unui plan de intervenție personalizat.</p></div>
           </div>
           <div class="cab-feat">
-            <div class="cab-feat-ico">
-              <svg width="18" height="18" viewBox="0 0 24 24">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-              </svg>
-            </div>
-            <div>
-              <h4>Consiliere pentru părinți</h4>
-              <p>Sesiuni de consiliere și ghidaj în gestionarea provocărilor de creștere și educație.</p>
-            </div>
+            <div class="cab-feat-ico"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <div><h4>Consiliere pentru părinți</h4><p>Sesiuni de consiliere și ghidaj în gestionarea provocărilor de creștere și educație.</p></div>
           </div>
           <div class="cab-feat">
-            <div class="cab-feat-ico">
-              <svg width="18" height="18" viewBox="0 0 24 24">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-            </div>
-            <div>
-              <h4>Terapie prin joc</h4>
-              <p>Tehnici specifice vârstei pentru dezvoltarea emoțională, socială și cognitivă.</p>
-            </div>
+            <div class="cab-feat-ico"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><h4>Terapie prin joc</h4><p>Tehnici specifice vârstei pentru dezvoltarea emoțională, socială și cognitivă.</p></div>
           </div>
           <div class="cab-feat">
-            <div class="cab-feat-ico">
-              <svg width="18" height="18" viewBox="0 0 24 24">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-                <line x1="16" y1="13" x2="8" y2="13"/>
-                <line x1="16" y1="17" x2="8" y2="17"/>
-                <polyline points="10 9 9 9 8 9"/>
-              </svg>
-            </div>
-            <div>
-              <h4>Rapoarte de progres</h4>
-              <p>Urmărirea evoluției copilului și comunicarea transparentă cu familia.</p>
-            </div>
+            <div class="cab-feat-ico"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+            <div><h4>Rapoarte de progres</h4><p>Urmărirea evoluției copilului și comunicarea transparentă cu familia.</p></div>
           </div>
         </div>
       </div>
       <div class="rev d2">
         <div class="img-ph p" style="border-radius:var(--r32);aspect-ratio:3/4" aria-hidden="true">
-          <div class="ph-wrap">
-            <div class="ph-ico">
-              <svg width="20" height="20" viewBox="0 0 24 24">
-                <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
-                <polyline points="21,15 16,10 5,21"/>
-              </svg>
-            </div>
-            <p class="ph-lbl">Spațiu pentru fotografie</p>
-          </div>
+          <div class="ph-ico"><svg width="22" height="22" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg></div>
+          <p class="ph-lbl">Spațiu pentru fotografie</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════
+<!-- ══════════════════════════════════════
      MAP
-════════════════════════════════════════════════ -->
+══════════════════════════════════════ -->
 <div class="map-ph" role="img" aria-label="Locația Grădinița Boroboată">
+  <div class="bbl" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;overflow:hidden">
+    <span class="b t"  style="position:absolute;width:120px;height:120px;top:-40px;left:-40px;opacity:.6;border-radius:50%;background:var(--teal)"></span>
+    <span class="b or" style="position:absolute;width:80px;height:80px;bottom:-25px;right:5%;opacity:.55;border-radius:50%;background:var(--orange)"></span>
+    <span class="b y"  style="position:absolute;width:50px;height:50px;top:10%;right:-18px;opacity:.6;border-radius:50%;background:var(--yellow)"></span>
+  </div>
   <div class="map-card">
-    <div class="map-ico">
-      <svg width="18" height="18" viewBox="0 0 24 24">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-        <circle cx="12" cy="10" r="3"/>
-      </svg>
-    </div>
+    <div class="map-ico"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
     <div>
       <h4>Grădinița Boroboață</h4>
       <p>Str. Locotenent Popovici nr. 10<br>Iași, Romania</p>
@@ -1084,10 +834,17 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
   <p class="map-note">Spațiu pentru Google Maps embed</p>
 </div>
 
-<!-- ════════════════════════════════════════════════
+<!-- ══════════════════════════════════════
      CONTACT
-════════════════════════════════════════════════ -->
+══════════════════════════════════════ -->
 <section id="contact">
+  <div class="bbl" aria-hidden="true">
+    <span class="b g"  style="width:80px;height:80px;top:-28px;left:5%;opacity:.8"></span>
+    <span class="b bl" style="width:50px;height:50px;top:-16px;right:-18px;opacity:.78"></span>
+    <span class="b r"  style="width:38px;height:38px;bottom:-14px;left:-14px;opacity:.75"></span>
+    <span class="b pk" style="width:26px;height:26px;bottom:20%;right:2%;opacity:.7"></span>
+    <span class="b y"  style="width:20px;height:20px;top:40%;left:-8px;opacity:.65"></span>
+  </div>
   <div class="wrap">
     <div class="sec-head c">
       <span class="sec-label or">Suntem aici</span>
@@ -1099,51 +856,20 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
       <div class="rev">
         <div class="con-info">
           <div class="con-item">
-            <div class="con-ico">
-              <svg width="18" height="18" viewBox="0 0 24 24">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-            </div>
-            <div>
-              <h4>Adresă</h4>
-              <p>Str. Locotenent Popovici nr. 10<br>Iași, Romania</p>
-            </div>
+            <div class="con-ico"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><h4>Adresă</h4><p>Str. Locotenent Popovici nr. 10<br>Iași, Romania</p></div>
           </div>
           <div class="con-item">
-            <div class="con-ico">
-              <svg width="18" height="18" viewBox="0 0 24 24">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.93a16 16 0 0 0 6 6l.91-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-              </svg>
-            </div>
-            <div>
-              <h4>Telefon</h4>
-              <a href="tel:+40747630664">0747 630 664</a>
-            </div>
+            <div class="con-ico"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.93a16 16 0 0 0 6 6l.91-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div><h4>Telefon</h4><a href="tel:+40747630664">0747 630 664</a></div>
           </div>
           <div class="con-item">
-            <div class="con-ico">
-              <svg width="18" height="18" viewBox="0 0 24 24">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                <polyline points="22,6 12,13 2,6"/>
-              </svg>
-            </div>
-            <div>
-              <h4>Email</h4>
-              <a href="mailto:gradinita.boroboata@gmail.com">gradinita.boroboata@gmail.com</a>
-            </div>
+            <div class="con-ico"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><h4>Email</h4><a href="mailto:gradinita.boroboata@gmail.com">gradinita.boroboata@gmail.com</a></div>
           </div>
           <div class="con-item">
-            <div class="con-ico">
-              <svg width="18" height="18" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12 6 12 12 16 14"/>
-              </svg>
-            </div>
-            <div>
-              <h4>Program</h4>
-              <p>Luni &ndash; Vineri: 07:00 &ndash; 18:00</p>
-            </div>
+            <div class="con-ico"><svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><h4>Program</h4><p>Luni &ndash; Vineri: 07:00 &ndash; 18:00</p></div>
           </div>
           <div class="open-tag">
             <span class="s-dot"></span>
@@ -1157,50 +883,20 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
           <p class="f-sub">Completați formularul și vă vom contacta în cel mai scurt timp.</p>
           <div id="fBody">
             <div class="f-row">
-              <div class="f-grp">
-                <label for="fN">Prenume *</label>
-                <input type="text" id="fN" placeholder="Ana" autocomplete="given-name">
-                <p class="err-t" id="fNe">Câmp obligatoriu</p>
-              </div>
-              <div class="f-grp">
-                <label for="fL">Nume *</label>
-                <input type="text" id="fL" placeholder="Popescu" autocomplete="family-name">
-                <p class="err-t" id="fLe">Câmp obligatoriu</p>
-              </div>
+              <div class="f-grp"><label for="fN">Prenume *</label><input type="text" id="fN" placeholder="Ana" autocomplete="given-name"><p class="err-t" id="fNe">Câmp obligatoriu</p></div>
+              <div class="f-grp"><label for="fL">Nume *</label><input type="text" id="fL" placeholder="Popescu" autocomplete="family-name"><p class="err-t" id="fLe">Câmp obligatoriu</p></div>
             </div>
-            <div class="f-grp">
-              <label for="fE">Email *</label>
-              <input type="email" id="fE" placeholder="ana.popescu@gmail.com" autocomplete="email">
-              <p class="err-t" id="fEe">Introduceți un email valid</p>
-            </div>
-            <div class="f-grp">
-              <label for="fP">Telefon</label>
-              <input type="tel" id="fP" placeholder="07XX XXX XXX" autocomplete="tel">
-            </div>
+            <div class="f-grp"><label for="fE">Email *</label><input type="email" id="fE" placeholder="ana.popescu@gmail.com" autocomplete="email"><p class="err-t" id="fEe">Introduceți un email valid</p></div>
+            <div class="f-grp"><label for="fP">Telefon</label><input type="tel" id="fP" placeholder="07XX XXX XXX" autocomplete="tel"></div>
             <div class="f-grp">
               <label for="fG">Grupa de interes</label>
-              <select id="fG">
-                <option value="">Selectați...</option>
-                <option>Grupa Baby (1&ndash;2 ani)</option>
-                <option>Grupa Mică (2&ndash;3 ani)</option>
-                <option>Grupa Mijlocie (3&ndash;4 ani)</option>
-                <option>Grupa Mare (4&ndash;6 ani)</option>
-                <option>Alte informații</option>
-              </select>
+              <select id="fG"><option value="">Selectați...</option><option>Grupa Baby (1&ndash;2 ani)</option><option>Grupa Mică (2&ndash;3 ani)</option><option>Grupa Mijlocie (3&ndash;4 ani)</option><option>Grupa Mare (4&ndash;6 ani)</option><option>Alte informații</option></select>
             </div>
-            <div class="f-grp">
-              <label for="fM">Mesaj *</label>
-              <textarea id="fM" placeholder="Descrieți pe scurt cererea dumneavoastră..."></textarea>
-              <p class="err-t" id="fMe">Câmp obligatoriu</p>
-            </div>
+            <div class="f-grp"><label for="fM">Mesaj *</label><textarea id="fM" placeholder="Descrieți pe scurt cererea dumneavoastră..."></textarea><p class="err-t" id="fMe">Câmp obligatoriu</p></div>
             <button class="btn btn-teal btn-full" onclick="sendForm()">Trimite mesajul</button>
           </div>
           <div class="form-ok" id="fOk">
-            <div class="ok-ico">
-              <svg width="24" height="24" viewBox="0 0 24 24">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-            </div>
+            <div class="ok-ico"><svg width="24" height="24" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
             <h3 style="margin-bottom:6px">Mesaj trimis</h3>
             <p style="color:var(--mid)">Vă mulțumim. Vă vom contacta în cel mai scurt timp.</p>
             <button class="btn btn-ghost" onclick="resetForm()" style="margin-top:16px">Trimite alt mesaj</button>
@@ -1211,44 +907,34 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════
+<!-- ══════════════════════════════════════
      FOOTER
-════════════════════════════════════════════════ -->
+══════════════════════════════════════ -->
 <footer>
   <div class="ft-wrap">
     <div class="ft-g">
       <div class="ft-brand">
         <span class="brand-tag">Grădinița Boroboață</span>
-        <p>Un loc unde copiii cresc frumos, cu grijă, pasiune și profesionalism.<br>Iași, Romania.</p>
+        <p>Un loc unde copiii cresc frumos, cu grijă, pasiune și profesionalism. Iași, Romania.</p>
         <div class="socs" aria-label="Rețele sociale">
-          <a href="#" class="soc" aria-label="Facebook">
-            <svg width="15" height="15" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-          </a>
-          <a href="#" class="soc" aria-label="Instagram">
-            <svg width="15" height="15" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r=".5" fill="rgba(255,255,255,.6)"/></svg>
-          </a>
-          <a href="#" class="soc" aria-label="YouTube">
-            <svg width="15" height="15" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="rgba(255,255,255,.5)" stroke="none"/></svg>
-          </a>
+          <a href="#" class="soc" aria-label="Facebook"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="soc" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg></a>
+          <a href="#" class="soc" aria-label="YouTube"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="rgba(255,255,255,.5)" stroke="none"/></svg></a>
         </div>
       </div>
       <div class="ft-col">
         <h4>Navigare</h4>
         <ul>
-          <li><a href="#home">Acasă</a></li>
-          <li><a href="#despre">Despre Noi</a></li>
-          <li><a href="#viziune">Viziune &amp; Misiune</a></li>
-          <li><a href="#servicii">Servicii</a></li>
+          <li><a href="#home">Acasă</a></li><li><a href="#despre">Despre Noi</a></li>
+          <li><a href="#viziune">Viziune &amp; Misiune</a></li><li><a href="#servicii">Servicii</a></li>
           <li><a href="#grupe">Grupele</a></li>
         </ul>
       </div>
       <div class="ft-col">
         <h4>Servicii</h4>
         <ul>
-          <li><a href="#servicii">Educație timpurie</a></li>
-          <li><a href="#cabinet">Cabinet Psihopedagogic</a></li>
-          <li><a href="#servicii">Activități creative</a></li>
-          <li><a href="#servicii">Masă și gustări</a></li>
+          <li><a href="#servicii">Educație timpurie</a></li><li><a href="#cabinet">Cabinet Psihopedagogic</a></li>
+          <li><a href="#servicii">Activități creative</a></li><li><a href="#servicii">Masă și gustări</a></li>
           <li><a href="#grupe">Grupele de vârstă</a></li>
         </ul>
       </div>
@@ -1268,114 +954,81 @@ footer{background:#2C2C2C;color:#fff;padding:64px 24px 0}
   </div>
 </footer>
 
-<!-- BACK TO TOP -->
 <button class="btt" id="btt" aria-label="Înapoi sus" onclick="window.scrollTo({top:0,behavior:'smooth'})">
   <svg width="18" height="18" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
 </button>
 
 <script>
-/* ── MODAL ─────────────────────────────────────── */
-let cur = 1;
-document.body.style.overflow = 'hidden';
-
-function updDots() {
-  [1,2,3].forEach(i => {
-    const d = document.getElementById('md'+i);
-    d.className = 'm-dot' + (i < cur ? ' done' : i === cur ? ' active' : '');
+/* ── MODAL ── */
+let cur=1;
+document.body.style.overflow='hidden';
+function updDots(){
+  [1,2,3].forEach(i=>{
+    const d=document.getElementById('md'+i);
+    d.className='m-dot'+(i<cur?' done':i===cur?' active':'');
   });
-  document.getElementById('overlay').querySelector('[role="progressbar"]').setAttribute('aria-valuenow', cur);
+  document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow',cur);
 }
-function showS(n) {
-  document.querySelectorAll('.m-slide').forEach(s => s.classList.remove('on'));
-  document.getElementById('ms'+n).classList.add('on');
-  cur = n; updDots();
+function showS(n){document.querySelectorAll('.m-slide').forEach(s=>s.classList.remove('on'));document.getElementById('ms'+n).classList.add('on');cur=n;updDots()}
+function nextS(){if(cur<3)showS(cur+1)}
+function prevS(){if(cur>1)showS(cur-1)}
+function closeM(){
+  const o=document.getElementById('overlay');
+  o.style.transition='opacity .3s ease';o.style.opacity='0';
+  setTimeout(()=>{o.style.display='none';document.body.style.overflow=''},300);
 }
-function nextS() { if (cur < 3) showS(cur + 1); }
-function prevS() { if (cur > 1) showS(cur - 1); }
-function closeM() {
-  const o = document.getElementById('overlay');
-  o.style.transition = 'opacity .35s ease';
-  o.style.opacity = '0';
-  setTimeout(() => { o.style.display = 'none'; document.body.style.overflow = ''; }, 350);
-}
-document.getElementById('mClose').addEventListener('click', closeM);
-document.getElementById('overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeM(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeM(); });
+document.getElementById('mClose').addEventListener('click',closeM);
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeM()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
 
-/* ── HEADER ─────────────────────────────────────── */
-window.addEventListener('scroll', () => {
-  const h = document.getElementById('hdr');
-  h.style.borderBottomColor = window.scrollY > 10 ? 'var(--border)' : 'var(--border)';
-  document.getElementById('btt').classList.toggle('show', window.scrollY > 400);
+/* ── HEADER ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('btt').classList.toggle('show',window.scrollY>400);
 });
 
-/* ── HAMBURGER ──────────────────────────────────── */
-const ham = document.getElementById('ham'), mob = document.getElementById('mob');
-ham.addEventListener('click', () => {
-  const open = mob.classList.toggle('open');
-  ham.classList.toggle('open', open);
-  ham.setAttribute('aria-expanded', open);
+/* ── HAMBURGER ── */
+const ham=document.getElementById('ham'),mob=document.getElementById('mob');
+ham.addEventListener('click',()=>{
+  const open=mob.classList.toggle('open');
+  ham.classList.toggle('open',open);
+  ham.setAttribute('aria-expanded',open);
 });
-function closeMob() {
-  mob.classList.remove('open'); ham.classList.remove('open');
-  ham.setAttribute('aria-expanded','false');
-}
-document.addEventListener('click', e => {
-  if (!ham.contains(e.target) && !mob.contains(e.target)) closeMob();
-});
+function closeMob(){mob.classList.remove('open');ham.classList.remove('open');ham.setAttribute('aria-expanded','false')}
+document.addEventListener('click',e=>{if(!ham.contains(e.target)&&!mob.contains(e.target))closeMob()});
 
-/* ── SCROLL REVEAL ──────────────────────────────── */
-const ro = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); ro.unobserve(e.target); }});
-}, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
-document.querySelectorAll('.rev').forEach(el => ro.observe(el));
+/* ── REVEAL ── */
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');ro.unobserve(e.target)}});
+},{threshold:.1,rootMargin:'0px 0px -36px 0px'});
+document.querySelectorAll('.rev').forEach(el=>ro.observe(el));
 
-/* ── ACTIVE NAV ─────────────────────────────────── */
-const navAs = document.querySelectorAll('nav a');
-const secObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navAs.forEach(a => {
-        a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id);
-      });
-    }
+/* ── ACTIVE NAV ── */
+const navAs=document.querySelectorAll('nav a');
+const secObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting)navAs.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id));
   });
-}, { threshold: 0.45 });
-document.querySelectorAll('section[id]').forEach(s => secObs.observe(s));
+},{threshold:.4});
+document.querySelectorAll('section[id]').forEach(s=>secObs.observe(s));
 
-/* ── FORM ───────────────────────────────────────── */
-const fields = [
-  { id:'fN', err:'fNe', ok: v => v.trim().length > 0 },
-  { id:'fL', err:'fLe', ok: v => v.trim().length > 0 },
-  { id:'fE', err:'fEe', ok: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-  { id:'fM', err:'fMe', ok: v => v.trim().length > 5 },
+/* ── FORM ── */
+const flds=[
+  {id:'fN',err:'fNe',ok:v=>v.trim().length>0},
+  {id:'fL',err:'fLe',ok:v=>v.trim().length>0},
+  {id:'fE',err:'fEe',ok:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)},
+  {id:'fM',err:'fMe',ok:v=>v.trim().length>5},
 ];
-fields.forEach(f => {
-  document.getElementById(f.id).addEventListener('input', function() {
-    this.classList.remove('err');
-    document.getElementById(f.err).classList.remove('show');
-  });
-});
-function sendForm() {
-  let ok = true;
-  fields.forEach(f => {
-    const el = document.getElementById(f.id), valid = f.ok(el.value);
-    el.classList.toggle('err', !valid);
-    document.getElementById(f.err).classList.toggle('show', !valid);
-    if (!valid) ok = false;
-  });
-  if (ok) {
-    document.getElementById('fBody').style.display = 'none';
-    document.getElementById('fOk').classList.add('show');
-  }
+flds.forEach(f=>{document.getElementById(f.id).addEventListener('input',function(){this.classList.remove('err');document.getElementById(f.err).classList.remove('show')})});
+function sendForm(){
+  let ok=true;
+  flds.forEach(f=>{const el=document.getElementById(f.id),v=f.ok(el.value);el.classList.toggle('err',!v);document.getElementById(f.err).classList.toggle('show',!v);if(!v)ok=false});
+  if(ok){document.getElementById('fBody').style.display='none';document.getElementById('fOk').classList.add('show')}
 }
-function resetForm() {
-  ['fN','fL','fE','fP','fM'].forEach(id => {
-    const el = document.getElementById(id); if(el){el.value='';el.classList.remove('err');}
-  });
-  document.getElementById('fG').value = '';
-  fields.forEach(f => document.getElementById(f.err).classList.remove('show'));
-  document.getElementById('fBody').style.display = 'block';
+function resetForm(){
+  ['fN','fL','fE','fP','fM'].forEach(id=>{const el=document.getElementById(id);if(el){el.value='';el.classList.remove('err')}});
+  document.getElementById('fG').value='';
+  flds.forEach(f=>document.getElementById(f.err).classList.remove('show'));
+  document.getElementById('fBody').style.display='block';
   document.getElementById('fOk').classList.remove('show');
 }
 </script>
